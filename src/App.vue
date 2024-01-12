@@ -12,6 +12,12 @@
     <LanguageSwitch class="header__lang-switch"/>
   </div>
   <router-view/>
+  <footer class="footer">
+    <div class="footer__text">Pet-проект. Создан Анной Тулупцевой. 2024 г.</div>
+    <a href="https://www.weatherapi.com/" title="Free Weather API" class="footer__link">
+      <img src='//cdn.weatherapi.com/v4/images/weatherapi_logo.png' alt="Weather data by WeatherAPI.com" border="0" class="footer__img">
+    </a>
+  </footer>
 </template>
 
 <script>
@@ -20,130 +26,152 @@
 
 // // register directive v-number and component <number>
 // Vue.use(VueNumberFormat, { precision: 4 })
-
+// import { useStore } from 'vuex'
 import SearchCityBlock from './components/SearchCityBlock.vue'
 import LanguageSwitch from './components/LanguageSwitch.vue'
+// import { Store } from 'vuex'
+// import store from './store'
 
 export default {
+  // store,
+  // Store,
   components: {
     SearchCityBlock,
     LanguageSwitch
+  },
+  setup () {
+    // const $store = useStore()
+    // $store.dispatch('getUserIP')
   }
 }
 
 </script>
 
 <style lang="scss">
-$primary-color: #22475a;
-$light-primary-color: #ffffff;
-$active-color: #6e4241;
-$focused-color: #b96246;
-$light-color: #eec583;
-$middle-color: #ef8d50;
+  $primary-color: #22475a;
+  $light-primary-color: #ffffff;
+  $active-color: #6e4241;
+  $focused-color: #b96246;
+  $light-color: #eec583;
+  $middle-color: #ef8d50;
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 
-  &:focus-visible {
-    outline: none;
-  }
-}
-
-html {
-    font-size: 18px;
-}
-
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: $primary-color;
-}
-
-%link {
-  text-decoration: none;
-  margin-right: 5%;
-}
-
-.header {
-  display: flex;
-  flex-direction: row;
-
-  &__nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-    align-items: center;
-    width: 55%;
-  }
-
-  &__search {
-    width: 35%;
-  }
-
-  &__lang-switch {
-    width: 10%;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 5px;
-  }
-}
-
-.nav {
-  &__link {
-    @extend %link;
-    font-size: 1rem;
-    font-weight: bold;
-    color: $primary-color;
-
-    &.router-link-exact-active {
-      color: $active-color;
-      text-decoration: underline;
+    &:focus-visible {
+      outline: none;
     }
   }
-}
 
-.btn {
-  padding: 8px;
-  border-radius: 6px;
-  border: none;
-  background: transparent;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  font-size: 1rem;
-}
-
-.input {
-  padding: 2px;
-  border-radius: 6px;
-  border: 1px solid $primary-color;
-  font-size: 1rem;
-
-  &:focus-visible,
-  &:active {
-    border-width: 3px;
-    border-color: $focused-color;
+  html {
+      font-size: 18px;
   }
-}
 
-.h4 {
-  margin-top: 5px;
-  margin-bottom: 10px;
-}
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: $primary-color;
+  }
 
-.container {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 5%;
-  padding-right: 5%;
-}
+  %link {
+    text-decoration: none;
+    margin-right: 5%;
+  }
 
-.compact-item {
- padding: 10px;
- border-radius: 5px;
- border-style: solid;
- border-width: 1px;
-}
+  .header {
+    display: flex;
+    flex-direction: row;
+
+    &__nav {
+      display: flex;
+      flex-direction: row;
+      justify-content: left;
+      align-items: center;
+      width: 50%;
+    }
+
+    &__search {
+      width: 35%;
+    }
+
+    &__lang-switch {
+      width: 15%;
+      padding-left: 10px;
+      padding-right: 10px;
+      border-radius: 5px;
+    }
+  }
+
+  .nav {
+    &__link {
+      @extend %link;
+      font-size: 1rem;
+      font-weight: bold;
+      color: $primary-color;
+
+      &.router-link-exact-active {
+        color: $active-color;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .btn {
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+  }
+
+  .input {
+    padding: 2px;
+    border-radius: 6px;
+    border: 1px solid $primary-color;
+    font-size: 1rem;
+
+    &:focus-visible,
+    &:active {
+      border-width: 3px;
+      border-color: $focused-color;
+    }
+  }
+
+  .h4 {
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+
+  .container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .span-smth-name {
+    margin-right: 15px;
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+    align-items: center;
+    height: 40px;
+
+    &__text {
+      font-size: .9rem;
+    }
+
+    &__img {
+      height: 100%;
+    }
+  }
+
 </style>
