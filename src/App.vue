@@ -26,7 +26,7 @@
 
 // // register directive v-number and component <number>
 // Vue.use(VueNumberFormat, { precision: 4 })
-// import { useStore } from 'vuex'
+import { useStore } from 'vuex'
 import SearchCityBlock from './components/SearchCityBlock.vue'
 import LanguageSwitch from './components/LanguageSwitch.vue'
 // import { Store } from 'vuex'
@@ -40,8 +40,8 @@ export default {
     LanguageSwitch
   },
   setup () {
-    // const $store = useStore()
-    // $store.dispatch('getUserIP')
+    const $store = useStore()
+    $store.dispatch('getUserIPData')
   }
 }
 

@@ -10,13 +10,15 @@ export default function () {
     isFailed: false
   })
 
-  const fetchWeather = (cityName) => {
+  function fetchWeather (cityName) {
     fetchStatus.isLoading = true
     fetchStatus.isFailed = false
     axios.get(`${API_BASE_URL}current.json?key=${theKey}&q=${cityName}`)
-      .then(res => res.json())
+      // .then(res => res.json())
       .then(response => {
-        console.log(response)
+        weatherData.value = Object.assign(response.data.current, { city: cityName })
+        // console.log('Данные получены: ')
+        // console.log(weatherData.value)
       })
       .catch(() => { fetchStatus.isFailed = true })
       .then(() => { fetchStatus.isLoading = false })

@@ -6,8 +6,8 @@
     <!--The down block shows list of cities with short weather info-->
     <div class="container cities-weather dark-theme">
       <button class="cities-weather__btn close-block-btn"></button>
-      <CompactCity class="cities-weather__compact-item cloud-weather-bg"/>
-      <CompactCity class="cities-weather__compact-item sunny-weather-bg"/>
+      <CompactCity v-for="(city) in cities" :key="city.id" :names="{eng: city.nameEng, ru: city.nameRu}" class="cities-weather__compact-item"/>
+      <!-- <CompactCity class="cities-weather__compact-item sunny-weather-bg"/>
       <CompactCity class="cities-weather__compact-item rainy-weather-bg"/>
       <CompactCity class="cities-weather__compact-item"/>
       <CompactCity class="cities-weather__compact-item"/>
@@ -16,7 +16,7 @@
       <CompactCity class="cities-weather__compact-item"/>
       <CompactCity class="cities-weather__compact-item"/>
       <CompactCity class="cities-weather__compact-item"/>
-      <CompactCity class="cities-weather__compact-item"/>
+      <CompactCity class="cities-weather__compact-item"/> -->
     </div>
   </div>
 </template>
@@ -24,9 +24,11 @@
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
-import { useStore } from 'vuex'
-import CompactCity from '@/components/CompactCity.vue'
+// import { useStore } from 'vuex'
+
 import CurrentCity from '@/components/CurrentCity.vue'
+import CompactCity from '@/components/CompactCity.vue'
+import standartCitiesList from '@/data/standartCitiesList.js'
 
 export default {
   name: 'HomeView',
@@ -35,16 +37,20 @@ export default {
     CompactCity
   },
   setup () {
-    const $store = useStore()
+    // const $store = useStore()
 
-    $store.dispatch('getUserIPData')
+    // $store.dispatch('getUserIPData')
     // $store.dispatch('getRealtimeWeather')
     // const weatherData = $store.state.realtimeWeather
 
     // $store.dispatch('findTheCity')
     // const cityInfo = $store.state.findTheCity
 
+    const cities = standartCitiesList
+    console.log(cities)
+
     return {
+      cities
       // weatherData,
       // cityInfo
     }

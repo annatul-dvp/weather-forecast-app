@@ -5,166 +5,84 @@ import axios from 'axios'
 
 export default createStore({
   state: {
-    userData: null,
-    loading: false,
     ip: null,
+    userData: null,
+    isUserDataLoading: false,
+    currentCityWeatherData: null,
     citiesAmount: 0,
     realtimeWeather: []
   },
   getters: {
+    isUserDataLoading (state) {
+      return state.isUserDataLoading
+    },
+    currentCityWeatherData (state) {
+      return state.currentCityWeatherData
+    }
   },
   mutations: {
+    setIP (state, ip) {
+      state.ip = ip
+    },
     setUserData (state, userData) {
       state.userData = userData
     },
-    setLoading (state, loading) {
-      state.loading = loading
+    setUserDataLoading (state, isUserDataLoading) {
+      state.isUserDataLoading = isUserDataLoading
     },
-    setIP (state, ip) {
-      state.ip = ip
+    setCurrentCityWeatherData (state, weatherData) {
+      console.log(weatherData)
+      state.currentCityWeatherData = weatherData
+      console.log(state.currentCityWeatherData.location)
     }
-    // updateRealtimeWeather (state, weatherData) {
-    //   console.log(weatherData)
-    //   const placeIndex = state.realtimeWeather.find(w => w.country === weatherData.location.country && w.city === weatherData.location.name)
-    //   if (placeIndex) {
-    //     console.log(placeIndex)
-    //     state.realtimeWeather = state.realtimeWeather.map(w => {
-    //       if (w.country === weatherData.location.country && w.city === weatherData.location.name) {
-    //         return {
-    //           ...w,
-    //           currentTemp: weatherData.current.temp_c,
-    //           currentTempFeelsLike: weatherData.current.feelslike_c,
-    //           humidity: weatherData.current.humidity
-    //         }
-    //       } else {
-    //         return w
-    //       }
-    //     })
-    //   } else {
-    //     state.citiesAmount += 1
-    //     state.realtimeWeather.push({
-    //       id: state.citiesAmount,
-    //       country: weatherData.location.country,
-    //       city: weatherData.location.name,
-    //       currentTemp: weatherData.current.temp_c,
-    //       currentTempFeelsLike: weatherData.current.feelslike_c,
-    //       humidity: weatherData.current.humidity
-    //     })
-    //   }
-    //   console.log(state.realtimeWeather)
-    // }
   },
   actions: {
-    getUserIP ({ commit }) {
-      commit('setLoading', true)
-      axios
-        .get('https://api.ipify.org?format=json')
-        .then(response => {
-          console.log(response.data.ip)
-          // this.ip = response.data.ip
-          // console.log(this.ip)
-          commit('setIP', response.data.ip)
-          commit('setUserData', response.data)
-          commit('setLoading', false)
-        })
-        .catch(error => {
-          console.log(error)
-          commit('setLoading', false)
-        })
-      console.log(this.ip)
-    },
     async getUserIPData ({ commit }) {
       try {
-        commit('setLoading', true)
+        commit('setUserDataLoading', true)
         await axios
           .get('https://api.ipify.org?format=json')
           .then(response => {
-            console.log(response.data.ip)
+            // console.log(response.data.ip)
             // console.log(this.state.ip)
             commit('setIP', response.data.ip)
-            commit('setLoading', false)
           })
           .catch(error => {
             console.log(error)
-            commit('setLoading', false)
           })
         await axios.get(`${API_BASE_URL}ip.json?key=${theKey}&q=${this.state.ip}`)
           .then(response => {
-            console.log(response)
+            // console.log(response.data)
             commit('setUserData', response.data)
           })
           .catch(error => {
+            console.log(error)
+          })
+        await axios.get(`${API_BASE_URL}current.json?key=${theKey}&q=${this.state.userData.city}`)
+          // .then(res => res.json())
+          .then(response => {
+            // console.log('Данные по погоде получены:')
+            // console.log(response.data)
+            commit('setCurrentCityWeatherData', response.data)
+            commit('setUserDataLoading', false)
+          })
+          .catch(error => {
+            commit('setUserDataLoading', false)
             console.log(error)
           })
       } catch (error) {
         console.log('Ошибка:', error)
         throw error
       }
-
-      // console.log('вызван')
-      const f = function (src) {
-        if (src.startsWith('https://api.ipify.org')) {
-          commit('setLoading', true)
-          axios
-            .get(src)
-            .then(response => {
-              console.log(response.data.ip)
-              // console.log(this.state.ip)
-              commit('setIP', response.data.ip)
-              commit('setLoading', false)
-            })
-            .catch(error => {
-              console.log(error)
-              commit('setLoading', false)
-            })
-        }
-        if (src.startsWith(API_BASE_URL)) {
-          axios.get(src)
-            // .then(res => res.json())
-            .then(response => {
-              console.log(response)
-              commit('setUserData', response.data)
-            })
-            .catch(error => {
-              console.log(error)
-              commit('setLoading', false)
-            })
-        }
-      }
-      // `${API_BASE_URL}ip.json?key=${theKey}&q=178.17.181.199`,
-      Promise.all(['https://api.ipify.org?format=json',
-        `${API_BASE_URL}ip.json?key=${theKey}&q=${this.state.ip}`]
-        .map((src) => {
-          console.log(src)
-          return f(src)
-        }
-        )
-      )
-
-      // axios.get(`${API_BASE_URL}ip.json?key=${theKey}q=auto:${this.ip}`)
-      //   .then(res => res.json())
-      //   .then(response => {
-      //     console.log(this.ip)
-      //     console.log(response)
-      //   })
-      //   .catch(() => {
-      //     console.error()
-      //   })
     }
-    // getRealtimeWeather (context) {
-    //   return fetch('http://api.weatherapi.com/v1/current.json?key=c9afb28b055240ea928174126230611&q=Kursk')
-    //     .then(res => res.json())
+    // getCurrentWeather (cityName) {
+    //   return axios
+    //     .get(`${API_BASE_URL}current.json?key=${theKey}&q=${cityName}`)
     //     .then(response => {
-    //       console.log(response)
-    //       context.commit('updateRealtimeWeather', response)
+    //       console.log(response.data.ip)
     //     })
-    // },
-    // findTheCity (context) {
-    //   return fetch('http://api.weatherapi.com/v1/search.json?key=c9afb28b055240ea928174126230611&q=lond')
-    //     .then(res => res.json())
-    //     .then(response => {
-    //       console.log(response)
-    //       // context.commit('updateRealtimeWeather', response)
+    //     .catch(error => {
+    //       console.log(error)
     //     })
     // }
   },

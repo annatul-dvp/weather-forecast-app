@@ -1,16 +1,47 @@
 <template>
-  <div class="compact-city">
-    <h4 class="h4 compact-city__name">City name</h4>
-    <div class="compact-city__temp">Температура: +7 С </div>
-    <div class="compact-city__temp-feels-like">Ощущается как {{ value }}</div>
+  <div v-if="weatherStatus.isLoading" class="compact-city">
+    <h4 class="h4 compact-city__name">{{ nameRu }}</h4>
+    <div>Идёт загрузка данных о погоде...</div>
+  </div>
+  <div v-else-if="weatherStatus.isFailed" class="compact-city">
+    <h4 class="h4 compact-city__name">{{ nameRu }}</h4>
+    <div>Не удалось загрузить данные о погоде</div>
+  </div>
+  <div v-else class="compact-city">
+    <h4 class="h4 compact-city__name">{{ nameRu }}</h4>
+    <div class="compact-city__temp">Температура: {{ weatherData.temp_c }} С </div>
+    <div class="compact-city__temp-feels-like">Ощущается как {{ weatherData.feelslike_c }} С </div>
   </div>
 </template>
 
 <script>
+import useCityWeatherInfo from '@/hooks/useCityWeatherInfo'
+// import { computed } from 'vue'
+// import { ref } from 'vue'
+
 export default {
-  data () {
+  props: {
+    names: { type: Object, required: true }
+  },
+  setup (props) {
+    const {
+      weatherData,
+      status: weatherStatus,
+
+      fetchWeather
+    } = useCityWeatherInfo()
+
+    fetchWeather(props.names.eng)
+
+    // const weather = computed(() => weatherData)
+
     return {
-      value: 125
+      nameEng: props.names.eng,
+      nameRu: props.names.ru,
+      value: 125,
+
+      weatherData,
+      weatherStatus
     }
   }
 }
