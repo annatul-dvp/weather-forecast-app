@@ -1,23 +1,39 @@
 import { createStore } from 'vuex'
 import { API_BASE_URL, theKey } from '@/config'
 import axios from 'axios'
-// import { ref } from 'vue'
+// При переводе через Rapid API (Google translate) с использованием хука useTranslation
+// import useTranslation from '@/hooks/useTranslation'
+import useCityNameTranslation from '@/hooks/useCityNameTranslation'
 
 export default createStore({
   state: {
-    ip: null,
-    userData: null,
-    isUserDataLoading: false,
-    currentCityWeatherData: null,
+    ip: null, // ip пользователя, по которому затем вычисляется его место расположение
+    userData: null, // данные о пользователе и его расположении
+    statuses: {
+      isDataLoading: false,
+      isDataFailed: false
+    },
+    currentWeatherData: null,
+    forecastWeatherData: null,
     citiesAmount: 0,
     realtimeWeather: []
   },
   getters: {
-    isUserDataLoading (state) {
-      return state.isUserDataLoading
+    getDataStatuses (state) {
+      console.log(state.statuses)
+      return state.statuses
     },
-    currentCityWeatherData (state) {
-      return state.currentCityWeatherData
+    isDataLoading (state) {
+      return state.statuses.isDataLoading
+    },
+    isDataFailed (state) {
+      return state.statuses.isDataFailed
+    },
+    currentWeatherData (state) {
+      return state.currentWeatherData
+    },
+    forecastWeatherData (state) {
+      return state.forecastWeatherData
     }
   },
   mutations: {
@@ -27,27 +43,48 @@ export default createStore({
     setUserData (state, userData) {
       state.userData = userData
     },
-    setUserDataLoading (state, isUserDataLoading) {
-      state.isUserDataLoading = isUserDataLoading
+    setDataLoading (state, isDataLoading) {
+      state.statuses.isDataLoading = isDataLoading
     },
-    setCurrentCityWeatherData (state, weatherData) {
+    setDataFailed (state, isDataFailed) {
+      state.statuses.isDataFailed = isDataFailed
+    },
+    setWeatherData (state, weatherData) {
       console.log(weatherData)
-      state.currentCityWeatherData = weatherData
-      console.log(state.currentCityWeatherData.location)
+      state.currentWeatherData = {
+        ...weatherData.current,
+        country: weatherData.location.country,
+        region: weatherData.location.region,
+        city: weatherData.location.region
+      }
+      state.forecastWeatherData = weatherData.forecast.forecastday
+    },
+    setCityNameTranslation (state, translation) {
+      console.log(translation)
+      state.currentWeatherData = {
+        ...state.currentWeatherData,
+        countryRu: translation.nameTranslation.country,
+        regionRu: translation.nameTranslation.region,
+        cityRu: translation.nameTranslation.city
+        /* При переводе через Rapid API (Google translate) с использованием хука useTranslation */
+        // nameRu: translation.nameRu.trans,
+        // countryRu: translation.countryRu.trans
+      }
     }
   },
   actions: {
-    async getUserIPData ({ commit }) {
+    // Default Data - data which are got from user data, his/her location
+    async getDefaultData ({ commit }) {
       try {
-        commit('setUserDataLoading', true)
+        commit('setDataLoading', true)
         await axios
-          .get('https://api.ipify.org?format=json')
+          // .get('https://api.ipify.org?format=json') // stoped working fow a while
+          .get('https://api.seeip.org/jsonip')
           .then(response => {
-            // console.log(response.data.ip)
-            // console.log(this.state.ip)
             commit('setIP', response.data.ip)
           })
           .catch(error => {
+            commit('setDataFailed', true)
             console.log(error)
           })
         await axios.get(`${API_BASE_URL}ip.json?key=${theKey}&q=${this.state.ip}`)
@@ -56,35 +93,39 @@ export default createStore({
             commit('setUserData', response.data)
           })
           .catch(error => {
+            commit('setDataFailed', true)
             console.log(error)
           })
-        await axios.get(`${API_BASE_URL}current.json?key=${theKey}&q=${this.state.userData.city}`)
-          // .then(res => res.json())
+        await axios.get(`${API_BASE_URL}forecast.json?key=${theKey}&q=${this.state.userData.city}&days=3`)
           .then(response => {
             // console.log('Данные по погоде получены:')
             // console.log(response.data)
-            commit('setCurrentCityWeatherData', response.data)
-            commit('setUserDataLoading', false)
+            commit('setWeatherData', response.data)
           })
           .catch(error => {
-            commit('setUserDataLoading', false)
+            commit('setDataFailed', true)
             console.log(error)
           })
+        commit('setCityNameTranslation',
+          await useCityNameTranslation(
+            this.state.currentWeatherData.country,
+            this.state.currentWeatherData.city,
+            this.state.currentWeatherData.region
+          )
+        /* Данные необходимые для перевода с английского на русский через Rapid API (Google translate) */
+        /* с использованием хука useTranslation */
+        // {
+        //   nameRu: await useTranslation(this.state.currentWeatherData.location.name),
+        //   countryRu: await useTranslation(this.state.currentWeatherData.location.country)
+        // }
+        )
+        commit('setDataLoading', false)
       } catch (error) {
+        commit('setDataFailed', true)
         console.log('Ошибка:', error)
         throw error
       }
     }
-    // getCurrentWeather (cityName) {
-    //   return axios
-    //     .get(`${API_BASE_URL}current.json?key=${theKey}&q=${cityName}`)
-    //     .then(response => {
-    //       console.log(response.data.ip)
-    //     })
-    //     .catch(error => {
-    //       console.log(error)
-    //     })
-    // }
   },
   modules: {
   }

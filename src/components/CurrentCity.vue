@@ -1,5 +1,6 @@
 <template>
-  <div v-if="isCityDataLoading" class="container detailed-weather">Идёт загрузка.... </div>
+  <div v-if="statuses.isDataFailed" class="container detailed-weather">Ошибка при загрузке данных! </div>
+  <div v-else-if="statuses.isDataLoading" class="container detailed-weather">Идёт загрузка.... </div>
   <div v-else class="container detailed-weather">
     <div class="detailed-weather__city-name">
       {{ currentCityName }}
@@ -35,16 +36,22 @@
 <script>
 import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
+// import useTranslation from '@/hooks/useTranslation'
 
 export default defineComponent({
   setup () {
     const $store = useStore()
-    const isCityDataLoading = computed(() => !!$store.getters.isUserDataLoading)
-    const currentCityName = computed(() => $store.getters.currentCityWeatherData.location.name)
-    const currentWeatherData = computed(() => $store.getters.currentCityWeatherData.current)
+    const statuses = computed(() => $store.getters.getDataStatuses)
+    console.log(statuses)
+    // const isCityDataLoading = computed(() => !!$store.getters.isUserDataLoading)
+    // const isCityDataFailed = computed(() => !!$store.getters.isUserDataFailed)
+    const currentCityName = computed(() => $store.getters.currentWeatherData.cityRu)
+    const currentWeatherData = computed(() => $store.getters.currentWeatherData)
 
     return {
-      isCityDataLoading,
+      statuses,
+      // isCityDataLoading,
+      // isCityDataFailed,
       currentCityName,
       currentWeatherData
     }

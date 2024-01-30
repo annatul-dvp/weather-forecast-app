@@ -16,10 +16,11 @@
 
 <script>
 import useCityWeatherInfo from '@/hooks/useCityWeatherInfo'
+import { defineComponent } from 'vue'
 // import { computed } from 'vue'
 // import { ref } from 'vue'
 
-export default {
+export default defineComponent({
   props: {
     names: { type: Object, required: true }
   },
@@ -44,7 +45,7 @@ export default {
       weatherStatus
     }
   }
-}
+})
 </script>
 
 <style scoped lang="scss">
@@ -53,7 +54,7 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    height: 200px;
+    // height: 200px;
 
     &__name {
       margin-top: 8%;

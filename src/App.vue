@@ -41,7 +41,7 @@ export default {
   },
   setup () {
     const $store = useStore()
-    $store.dispatch('getUserIPData')
+    $store.dispatch('getDefaultData')
   }
 }
 
@@ -82,9 +82,29 @@ export default {
     margin-right: 5%;
   }
 
+  .light-theme {
+    background-color: $light-primary-color;
+    color: $primary-color;
+    border-color: $primary-color;
+
+    .close-block-btn::before {
+      border-color: $primary-color;
+    }
+  }
+
+  .dark-theme {
+    background-color: $primary-color;
+    color: $light-primary-color;
+
+    .close-block-btn::before {
+      border-color: $light-primary-color;
+    }
+  }
+
   .header {
     display: flex;
     flex-direction: row;
+    height: 80px;
 
     &__nav {
       display: flex;
