@@ -1,13 +1,13 @@
 import axios from 'axios'
 import { ref } from 'vue'
 
-export default async function (text) {
-  console.log(text)
+export default async function (text, from, to) {
+  // console.log(text)
   const trans = ref(null)
 
   const encodedParams = new URLSearchParams()
-  encodedParams.set('from', 'en')
-  encodedParams.set('to', 'ru')
+  encodedParams.set('from', from) // auto,en
+  encodedParams.set('to', to) // ru, eng...
   encodedParams.set('text', text)
 
   const options = {
@@ -24,9 +24,9 @@ export default async function (text) {
   try {
     const response = await axios.request(options)
     trans.value = response.data.trans
-    console.log('Перевод')
-    console.log(response.data.trans)
-    console.log(response.data)
+    // console.log('Перевод')
+    // console.log(response.data.trans)
+    // console.log(response.data)
   } catch (error) {
     console.error(error)
   }

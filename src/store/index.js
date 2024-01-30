@@ -20,7 +20,7 @@ export default createStore({
   },
   getters: {
     getDataStatuses (state) {
-      console.log(state.statuses)
+      // console.log(state.statuses)
       return state.statuses
     },
     isDataLoading (state) {
@@ -50,7 +50,7 @@ export default createStore({
       state.statuses.isDataFailed = isDataFailed
     },
     setWeatherData (state, weatherData) {
-      console.log(weatherData)
+      // console.log(weatherData)
       state.currentWeatherData = {
         ...weatherData.current,
         country: weatherData.location.country,
@@ -60,7 +60,7 @@ export default createStore({
       state.forecastWeatherData = weatherData.forecast.forecastday
     },
     setCityNameTranslation (state, translation) {
-      console.log(translation)
+      // console.log(translation)
       state.currentWeatherData = {
         ...state.currentWeatherData,
         countryRu: translation.nameTranslation.country,
