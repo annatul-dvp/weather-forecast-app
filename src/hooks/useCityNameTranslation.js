@@ -13,7 +13,7 @@ export default function (country, subcountry, city) {
 
   for (const n of citiesDataBase) {
     // console.log(n)
-    if (n.name === city & n.country === country & n.subcountry === subcountry) {
+    if (n.name === city & n.country === country) {
       // console.log(n)
       nameTranslation.value.country = n.countryRU
       nameTranslation.value.region = n.subcountryRU

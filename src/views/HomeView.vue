@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--The up block shows current/chosen city weather info-->
-    <CurrentCity class="light-theme current-city"/>
+    <CurrentCityInfo class="light-theme current-city"/>
 
     <!--The down block shows list of cities with short weather info-->
     <AdditionalInfo class="additional-info"/>
@@ -11,12 +11,12 @@
 <script>
 import { defineComponent } from 'vue'
 import AdditionalInfo from '@/components/AdditionalInfo.vue'
-import CurrentCity from '@/components/CurrentCity.vue'
+import CurrentCityInfo from '@/components/CurrentCityInfo.vue'
 
 export default defineComponent({
   name: 'HomeView',
   components: {
-    CurrentCity,
+    CurrentCityInfo,
     AdditionalInfo
   },
   setup () {

@@ -50,17 +50,17 @@ export default createStore({
       state.statuses.isDataFailed = isDataFailed
     },
     setWeatherData (state, weatherData) {
-      // console.log(weatherData)
+      console.log(weatherData)
       state.currentWeatherData = {
         ...weatherData.current,
         country: weatherData.location.country,
         region: weatherData.location.region,
-        city: weatherData.location.region
+        city: weatherData.location.name
       }
       state.forecastWeatherData = weatherData.forecast.forecastday
     },
     setCityNameTranslation (state, translation) {
-      // console.log(translation)
+      console.log(translation)
       state.currentWeatherData = {
         ...state.currentWeatherData,
         countryRu: translation.nameTranslation.country,
