@@ -20,7 +20,7 @@ import { API_BASE_URL, theKey } from '@/config'
 import { defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
 import ModalWindow from '@/components/ModalWindow.vue'
-import useCityNameTranslation from '@/hooks/useCityNameTranslation'
+// import useCityNameTranslation from '@/hooks/useCityNameTranslation'
 // import useTranslation from '@/hooks/useTranslation.js'
 
 export default defineComponent({
@@ -35,16 +35,12 @@ export default defineComponent({
     const foundCities = ref()
 
     function getAssumedCitiesList (name) {
-      // console.log('Запущена')
       if (name !== '') {
-        // const nameEng = useTranslation(name.value, 'auto', 'en')
-        // console.log(nameEng)
+        console.log(name)
         foundCities.value = axios.get(`${API_BASE_URL}search.json?key=${theKey}&q=${name}`)
           .then(response => {
-            // response.data.forEach((city) => foundCities.value.push(city))
             foundCities.value = response.data
-            // console.log(response.data)
-            // console.log(foundCities.value)
+            console.log(response.data)
           })
           .catch(error => {
             console.log(error)
@@ -54,31 +50,28 @@ export default defineComponent({
 
     const $store = useStore()
 
-    async function getSearchedCityData (city) {
+    function getSearchedCityData (city) {
       console.log(foundCities.value)
       if (!foundCities.value || foundCities.value.length === 0) {
-        console.log('Empty')
         errorTheCityIsntFound.value = true
       } else {
-        // console.log('Something')
-        await axios.get(`${API_BASE_URL}forecast.json?key=${theKey}&q=${city}&days=3`)
+        axios.get(`${API_BASE_URL}forecast.json?key=${theKey}&q=${city}&days=3`)
           .then(response => {
             console.log('Найдены данные о городе:')
             console.log(response.data)
             $store.commit('setWeatherData', response.data)
-            // commit('setWeatherData', response.data)
           })
           .catch(error => {
             $store.commit('setDataFailed', true)
             console.log(error)
           })
-        $store.commit('setCityNameTranslation',
-          await useCityNameTranslation(
-            $store.state.currentWeatherData.country,
-            $store.state.currentWeatherData.region,
-            $store.state.currentWeatherData.city
-          )
-        )
+        // $store.commit('setCityNameTranslation',
+        //   await useCityNameTranslation(
+        //     $store.state.currentWeatherData.country,
+        //     $store.state.currentWeatherData.region,
+        //     $store.state.currentWeatherData.city
+        //   )
+        // )
       }
     }
 

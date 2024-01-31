@@ -45,7 +45,7 @@ export default defineComponent({
     // console.log(statuses)
     // const isCityDataLoading = computed(() => !!$store.getters.isUserDataLoading)
     // const isCityDataFailed = computed(() => !!$store.getters.isUserDataFailed)
-    const currentCityName = computed(() => $store.getters.currentWeatherData.cityRu)
+    const currentCityName = computed(() => $store.getters.currentWeatherData.city)
     const currentWeatherData = computed(() => $store.getters.currentWeatherData)
 
     return {

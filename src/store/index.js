@@ -3,10 +3,11 @@ import { API_BASE_URL, theKey } from '@/config'
 import axios from 'axios'
 // При переводе через Rapid API (Google translate) с использованием хука useTranslation
 // import useTranslation from '@/hooks/useTranslation'
-import useCityNameTranslation from '@/hooks/useCityNameTranslation'
+// import useCityNameTranslation from '@/hooks/useCityNameTranslation'
 
 export default createStore({
   state: {
+    lang: 'ru',
     ip: null, // ip пользователя, по которому затем вычисляется его место расположение
     userData: null, // данные о пользователе и его расположении
     statuses: {
@@ -50,7 +51,7 @@ export default createStore({
       state.statuses.isDataFailed = isDataFailed
     },
     setWeatherData (state, weatherData) {
-      console.log(weatherData)
+      // console.log(weatherData)
       state.currentWeatherData = {
         ...weatherData.current,
         country: weatherData.location.country,
@@ -60,7 +61,7 @@ export default createStore({
       state.forecastWeatherData = weatherData.forecast.forecastday
     },
     setCityNameTranslation (state, translation) {
-      console.log(translation)
+      // console.log(translation)
       state.currentWeatherData = {
         ...state.currentWeatherData,
         countryRu: translation.nameTranslation.country,
@@ -96,29 +97,36 @@ export default createStore({
             commit('setDataFailed', true)
             console.log(error)
           })
-        await axios.get(`${API_BASE_URL}forecast.json?key=${theKey}&q=${this.state.userData.city}&days=3`)
-          .then(response => {
-            // console.log('Данные по погоде получены:')
-            // console.log(response.data)
-            commit('setWeatherData', response.data)
-          })
-          .catch(error => {
-            commit('setDataFailed', true)
-            console.log(error)
-          })
-        commit('setCityNameTranslation',
-          await useCityNameTranslation(
-            this.state.currentWeatherData.country,
-            this.state.currentWeatherData.city,
-            this.state.currentWeatherData.region
-          )
-        /* Данные необходимые для перевода с английского на русский через Rapid API (Google translate) */
-        /* с использованием хука useTranslation */
-        // {
-        //   nameRu: await useTranslation(this.state.currentWeatherData.location.name),
-        //   countryRu: await useTranslation(this.state.currentWeatherData.location.country)
-        // }
-        )
+        if (this.state.lang === 'en') {
+          console.log('English')
+          await axios.get(`${API_BASE_URL}forecast.json?key=${theKey}&q=${this.state.userData.city}&days=3`)
+            .then(response => {
+              console.log(response.data)
+              commit('setWeatherData', response.data)
+            })
+            .catch(error => {
+              commit('setDataFailed', true)
+              console.log(error)
+            })
+        } else {
+          console.log('Russian')
+          await axios.get(`${API_BASE_URL}forecast.json?key=${theKey}&q=${this.state.userData.lat},${this.state.userData.lon}&days=3&lang=ru`)
+            .then(response => {
+              commit('setWeatherData', response.data)
+            })
+            .catch(error => {
+              commit('setDataFailed', true)
+              console.log(error)
+            })
+        }
+        // Перевод на русски, но возможно он не нужен, если получать данные по широте и долготе
+        // commit('setCityNameTranslation',
+        //   await useCityNameTranslation(
+        //     this.state.currentWeatherData.country,
+        //     this.state.currentWeatherData.city,
+        //     this.state.currentWeatherData.region
+        //   )
+        // )
         commit('setDataLoading', false)
       } catch (error) {
         commit('setDataFailed', true)

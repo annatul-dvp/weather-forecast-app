@@ -1,18 +1,56 @@
 <template>
 <div>
-  <label class="lang">
-    <input type="checkbox" class="input lang__checkbox lang__checkbox_eng">
+  <label class="lang" :class="langStatus.en">
+    <input type="checkbox" class="input lang__checkbox lang__checkbox_eng" @click="setLanguage('en')">
     <span class="lang__custom-checkbox">
     </span>
     English
   </label>
-  <label class="lang lang_active">
-    <input type="checkbox" class="input lang__checkbox lang__checkbox_ru">
+  <label class="lang" :class="langStatus.ru">
+    <input type="checkbox" class="input lang__checkbox lang__checkbox_ru" @click="setLanguage('ru')">
     <span class="lang__custom-checkbox"></span>
     Русский
   </label>
 </div>
 </template>
+
+<script>
+import { defineComponent, ref } from 'vue'
+import { useStore } from 'vuex'
+
+export default defineComponent({
+  setup () {
+    const $store = useStore()
+
+    const langStatus = ref({
+      en: '',
+      ru: ''
+    })
+
+    function setStatus () {
+      if ($store.state.lang === 'en') {
+        langStatus.value.en = 'lang_active'
+        langStatus.value.ru = ''
+      } else {
+        langStatus.value.ru = 'lang_active'
+        langStatus.value.en = ''
+      }
+    }
+
+    setStatus()
+
+    function setLanguage (lang) {
+      $store.state.lang = lang
+      setStatus()
+    }
+
+    return {
+      langStatus,
+      setLanguage
+    }
+  }
+})
+</script>
 
 <style scoped lang="scss">
   // $lang-width: calc(50% - 10px);
@@ -51,7 +89,7 @@
     height: 100%;
     width: 100%;
     background-color: $primary-color;
-    transition: all 0.2s ease-in-out;
+    transition: all .4s ease-in-out;
   }
 
   .lang_active {
