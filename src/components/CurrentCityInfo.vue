@@ -42,16 +42,11 @@ export default defineComponent({
   setup () {
     const $store = useStore()
     const statuses = computed(() => $store.getters.getDataStatuses)
-    // console.log(statuses)
-    // const isCityDataLoading = computed(() => !!$store.getters.isUserDataLoading)
-    // const isCityDataFailed = computed(() => !!$store.getters.isUserDataFailed)
     const currentCityName = computed(() => $store.getters.currentWeatherData.city)
     const currentWeatherData = computed(() => $store.getters.currentWeatherData)
 
     return {
       statuses,
-      // isCityDataLoading,
-      // isCityDataFailed,
       currentCityName,
       currentWeatherData
     }
@@ -76,7 +71,7 @@ export default defineComponent({
     &__current-time{
       @extend %flex-column-left-sided;
       padding-left: 5%;
-      width: 40%;
+      width: 50%;
       height: 50%;
     }
 
@@ -94,18 +89,13 @@ export default defineComponent({
     &__info {
       display: flex;
       flex-direction: row;
-      width: 60%;
+      width: 50%;
       margin-bottom: 25px;
       font-size: 1.2rem;
     }
 
     &__picture {
-
       position: absolute;
-      // display: flex;
-      // flex-direction: column;
-      // justify-content: center;
-      // top: 12%;
       top: 50px;
       left: 6%;
       width: 60x;
@@ -117,7 +107,6 @@ export default defineComponent({
       z-index: -1;
       width: 100%;
       opacity: .5;
-      // transform: translateY(5%);
     }
   }
 </style>

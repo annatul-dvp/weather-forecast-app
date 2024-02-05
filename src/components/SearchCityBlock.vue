@@ -5,15 +5,18 @@
       <input type="text" list="cities_datalist" class="input search-form__input"
         v-model.trim="searchedCity" placeholder="Введите город"
         @input="getAssumedCitiesList(searchedCity)"
-        @mouseenter="setDatalistStatus('')" @mouseleave="setDatalistStatus('custom-datalist_hidden')">
-      <div id="cities_datalist" class="custom-datalist search-form__custom-datalist" :class="datalistStatus">
+        @mouseenter="setDatalistStatus('')">
+      <div id="cities_datalist" class="custom-datalist search-form__custom-datalist" :class="datalistStatus"
+      @mouseleave="setDatalistStatus('custom-datalist_hidden')">
         <div class="custom-datalist__option" v-for="city of foundCities" :key="city.id"
         :value="city.name +', ' + city.country" @click="toChooseCity(city)">
           {{ city.name +', ' + city.country }}
         </div>
       </div>
     </fieldset>
-    <button type="submit" class="btn search-form__btn" @click.prevent="getSearchedCityData(searchedCity)">Найти</button>
+    <button type="submit" class="btn btn_dark-theme search-form__btn" @click.prevent="getSearchedCityData(searchedCity)">
+      <span class="btn__txt">Найти</span>
+    </button>
     <ModalWindow v-model:open="errorTheCityIsntFound">
       Город не найден!
     </ModalWindow>
@@ -53,6 +56,7 @@ export default defineComponent({
           })
         await setDatalistStatus('')
       } else {
+        foundCities.value = []
         setDatalistStatus('custom-datalist_hidden')
       }
     }
@@ -156,18 +160,16 @@ $middle-color: #ef8d50;
   top: calc(100% - 6px + 1px);
   left: 0;
   display: block;
-  // display: flex;
-  // flex-direction: column;
-  // align-items: flex-start;
   padding-top: 6px;
   width: 100%;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
-  border-left: 1px solid $primary-color;
-  border-right: 1px solid $primary-color;
-  border-bottom: 1px solid $primary-color;
-  // border: 1px solid $primary-color;
+  border-left: 3px solid $focused-color;
+  border-right: 3px solid $focused-color;
+  border-bottom: 3px solid $focused-color;
   overflow-x: hidden;
+  transition: all .5s ease;
+  transform: translateY(0px);
 
   &__option {
     cursor: pointer;
@@ -190,11 +192,8 @@ $middle-color: #ef8d50;
 }
 
 .custom-datalist_hidden {
-  display: none;
-}
-.btn {
-  background-color: $primary-color;
-  color: $light-primary-color;
+  opacity: 0;
+  transform: translateY(-6px);
 }
 
 </style>

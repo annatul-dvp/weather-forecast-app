@@ -13,10 +13,10 @@
   </div>
   <router-view/>
   <footer class="footer">
-    <div class="footer__text">Pet-проект. Создан Анной Тулупцевой. 2024 г.</div>
     <a href="https://www.weatherapi.com/" title="Free Weather API" class="footer__link">
       <img src='//cdn.weatherapi.com/v4/images/weatherapi_logo.png' alt="Weather data by WeatherAPI.com" border="0" class="footer__img">
     </a>
+    <div class="footer__text">Pet-проект. Создан Анной Тулупцевой. 2024 г.</div>
   </footer>
   <div id="teleport-target"></div>
 </template>
@@ -30,12 +30,8 @@
 import { useStore } from 'vuex'
 import SearchCityBlock from './components/SearchCityBlock.vue'
 import LanguageSwitch from './components/LanguageSwitch.vue'
-// import { Store } from 'vuex'
-// import store from './store'
 
 export default {
-  // store,
-  // Store,
   components: {
     SearchCityBlock,
     LanguageSwitch
@@ -55,6 +51,25 @@ export default {
   $focused-color: #b96246;
   $light-color: #eec583;
   $middle-color: #ef8d50;
+
+  $header-height: 80px;
+  $footer-height: 50px;
+
+  @mixin text-to-choose ($border-color) {
+    position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 100%;
+        height: 2px;
+        border-bottom: 2px solid $border-color;
+        opacity: 0;
+        transition: all .5s ease-in-out;
+      }
+  }
 
   * {
     box-sizing: border-box;
@@ -105,7 +120,7 @@ export default {
   .header {
     display: flex;
     flex-direction: row;
-    height: 80px;
+    height: $header-height;
 
     &__nav {
       display: flex;
@@ -129,25 +144,80 @@ export default {
 
   .nav {
     &__link {
+      @include text-to-choose($primary-color);
       @extend %link;
       font-size: 1rem;
       font-weight: bold;
       color: $primary-color;
 
       &.router-link-exact-active {
+        @include text-to-choose($active-color);
         color: $active-color;
-        text-decoration: underline;
+        &:after {
+          opacity: 1;
+        }
+      }
+
+      &:hover {
+          &:after {
+            opacity: 1;
+          }
       }
     }
   }
 
   .btn {
+    cursor: pointer;
     padding: 8px;
     border-radius: 6px;
     border: none;
     background: transparent;
     font-family: Avenir, Helvetica, Arial, sans-serif;
-    font-size: 1rem;
+    font-size: .95rem;
+    transform-origin: center;
+    transition: all .5s ease-in-out;
+
+    &:hover {
+      .btn__txt {
+        &::after {
+          opacity: 1;
+        }
+      }
+    }
+
+    &:active {
+      background-color: $active-color;
+      color: $light-primary-color;
+
+      .btn__txt {
+        &::after {
+          opacity: 0;
+        }
+      }
+    }
+
+    &__txt {
+      @include text-to-choose($light-primary-color);
+      // position: relative;
+
+      // &::after {
+      //   content: '';
+      //   position: absolute;
+      //   left: 0;
+      //   bottom: -2px;
+      //   width: 100%;
+      //   height: 2px;
+      //   border-bottom: 2px solid $light-primary-color;
+      //   opacity: 0;
+      //   transition: all .5s ease-in-out;
+      // }
+    }
+
+  }
+
+  .btn_dark-theme {
+    background-color: $primary-color;
+    color: $light-primary-color;
   }
 
   .input {
@@ -182,12 +252,20 @@ export default {
   .footer {
     display: flex;
     flex-direction: row;
-    justify-content:space-around;
+    justify-content: center;
     align-items: center;
-    height: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: $footer-height;
 
     &__text {
+      margin-left: 25px;
       font-size: .9rem;
+    }
+
+    &__link{
+      margin-right: 25px;
+      height: 100%;
     }
 
     &__img {

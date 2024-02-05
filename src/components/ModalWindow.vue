@@ -3,7 +3,7 @@
     <div class="teleport-blackout"></div>
     <div class="teleport-modal" @click="onOutsideClick" ref="modal">
       <div ref="contentElement" class="teleport-modal__content">
-        <button type="button" class="teleport-modal__close" @click="doCloseModal">X</button>
+        <button type="button" class="teleport-modal__close" @click="doCloseModal"></button>
         <slot></slot>
       </div>
     </div>
@@ -57,6 +57,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+$primary-color: #22475a;
+$light-primary-color: #ffffff;
+$active-color: #6e4241;
+$focused-color: #b96246;
+$light-color: #eec583;
+$middle-color: #ef8d50;
+
 .teleport-blackout {
   z-index: 1000;
   position: fixed;
@@ -65,7 +72,7 @@ export default defineComponent({
   width: 100%;
   height: 100%;
   opacity: 0.75;
-  background-color: #000000;
+  background-color: $primary-color;
 }
 .teleport-modal {
   z-index: 1000;
@@ -82,20 +89,50 @@ export default defineComponent({
 }
 .teleport-modal__content {
   position: relative;
-  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 500px;
+  max-width: 50%;
+  min-height: 300px;
   margin-top: auto;
   margin-bottom: auto;
   padding: 40px;
-  background-color: #ffffff;
+  border-radius: 6px;
+  background-color: $light-primary-color;
 }
 .teleport-modal__close {
   position: absolute;
   top: 0;
   right: 0;
-  padding: 15px;
+  padding: 20px;
   line-height: 1;
   background-color: transparent;
   border: none;
   font-size: 20px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 25%;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    border-left: 4px solid $primary-color;
+    transform-origin: center;
+    transform: rotate(45deg) translate(13px, -22%);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    border-bottom: 4px solid $primary-color;
+    transform-origin: center;
+    transform: rotate(45deg) translate(6px, -18px);
+  }
 }
 </style>
