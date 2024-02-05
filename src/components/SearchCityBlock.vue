@@ -1,13 +1,19 @@
 <!-- Block with form for search certain city weather -->
 <template>
-  <form action="" class="form">
-    <input type="text" list="cities_datalist" class="input"
-      v-model.trim="searchedCity" placeholder="Введите город"
-      @input="getAssumedCitiesList(searchedCity)">
-    <datalist id="cities_datalist" class="datalist">
-      <option v-for="city of foundCities" :key="city.id" :value="city.name +', ' + city.country"/>
-    </datalist>
-    <button type="submit" class="btn btn-submit" @click="getSearchedCityData(searchedCity)">Найти</button>
+  <form action="" class="form search-form">
+    <fieldset class="search-form__fieldset">
+      <input type="text" list="cities_datalist" class="input search-form__input"
+        v-model.trim="searchedCity" placeholder="Введите город"
+        @input="getAssumedCitiesList(searchedCity)"
+        @mouseenter="setDatalistStatus('')" @mouseleave="setDatalistStatus('custom-datalist_hidden')">
+      <div id="cities_datalist" class="custom-datalist search-form__custom-datalist" :class="datalistStatus">
+        <div class="custom-datalist__option" v-for="city of foundCities" :key="city.id"
+        :value="city.name +', ' + city.country" @click="toChooseCity(city)">
+          {{ city.name +', ' + city.country }}
+        </div>
+      </div>
+    </fieldset>
+    <button type="submit" class="btn search-form__btn" @click.prevent="getSearchedCityData(searchedCity)">Найти</button>
     <ModalWindow v-model:open="errorTheCityIsntFound">
       Город не найден!
     </ModalWindow>
@@ -28,37 +34,52 @@ export default defineComponent({
     ModalWindow
   },
   setup () {
-    const errorTheCityIsntFound = ref(false)
-    const searchedCity = ref('')
-    const searchedCityData = ref()
+    const errorTheCityIsntFound = ref(false) // error info, it will open ModalWindow if the city hasn't been found
+    const searchedCity = ref('') // the name of city to be searched, changing with input data
+    const searchedCityData = ref() // data of searched city, it's got after clicking button 'Search'
 
-    const foundCities = ref()
+    // list of found assumed cities
+    const foundCities = ref([])
 
-    function getAssumedCitiesList (name) {
+    // getting list of assumed cities that we might be searching
+    async function getAssumedCitiesList (name) {
       if (name !== '') {
-        console.log(name)
-        foundCities.value = axios.get(`${API_BASE_URL}search.json?key=${theKey}&q=${name}`)
+        await axios.get(`${API_BASE_URL}search.json?key=${theKey}&q=${name}`)
           .then(response => {
             foundCities.value = response.data
-            console.log(response.data)
           })
           .catch(error => {
             console.log(error)
           })
+        await setDatalistStatus('')
+      } else {
+        setDatalistStatus('custom-datalist_hidden')
+      }
+    }
+
+    // datalist status variable
+    const datalistStatus = ref('custom-datalist_hidden')
+
+    // Settin datalist status, does it need to be hidded or showed
+    function setDatalistStatus (status) {
+      // Checking is there something to show or the list is empty
+      if (foundCities.value.length !== 0) {
+        datalistStatus.value = status
+      } else {
+        datalistStatus.value = 'custom-datalist_hidden'
       }
     }
 
     const $store = useStore()
 
+    // Getting full information of chosen city
     function getSearchedCityData (city) {
-      console.log(foundCities.value)
-      if (!foundCities.value || foundCities.value.length === 0) {
+      if (foundCities.value.length === 0) {
+        // if array of cities is empty, that means none city is found
         errorTheCityIsntFound.value = true
       } else {
         axios.get(`${API_BASE_URL}forecast.json?key=${theKey}&q=${city}&days=3`)
           .then(response => {
-            console.log('Найдены данные о городе:')
-            console.log(response.data)
             $store.commit('setWeatherData', response.data)
           })
           .catch(error => {
@@ -75,13 +96,24 @@ export default defineComponent({
       }
     }
 
+    // Choosing city from dataset of cities
+    function toChooseCity (city) {
+      searchedCity.value = city.name + ', ' + city.country
+      foundCities.value.length = 0
+      foundCities.value.push(city)
+    }
+
     return {
       errorTheCityIsntFound,
       searchedCity,
-      searchedCityData,
-      getSearchedCityData,
       getAssumedCitiesList,
-      foundCities
+      foundCities,
+      datalistStatus,
+      setDatalistStatus,
+      toChooseCity,
+
+      getSearchedCityData,
+      searchedCityData
     }
   }
 })
@@ -95,19 +127,72 @@ $focused-color: #b96246;
 $light-color: #eec583;
 $middle-color: #ef8d50;
 
-.form {
+.search-form {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-}
-.input {
-  height: 100%;
-  width: 65%;
-  margin-right: 2%;
+
+  &__fieldset {
+    position: relative;
+    height: 100%;
+    width: 65%;
+    margin-right: 2%;
+    border: none;
+  }
+
+  &__input {
+    height: 100%;
+    width: 100%;
+  }
+
+  &__btn {
+    width: 33%;
+  }
 }
 
+.custom-datalist {
+  z-index: 1;
+  position: absolute;
+  top: calc(100% - 6px + 1px);
+  left: 0;
+  display: block;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: flex-start;
+  padding-top: 6px;
+  width: 100%;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-left: 1px solid $primary-color;
+  border-right: 1px solid $primary-color;
+  border-bottom: 1px solid $primary-color;
+  // border: 1px solid $primary-color;
+  overflow-x: hidden;
+
+  &__option {
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    height: 40px;
+    background-color: $light-primary-color;
+    white-space: nowrap;
+    text-align: left;
+
+    &:hover {
+      background-color: $light-color;
+    }
+
+    &:active {
+      background-color: $active-color;
+      color: $light-primary-color;
+    }
+  }
+}
+
+.custom-datalist_hidden {
+  display: none;
+}
 .btn {
-  width: 33%;
   background-color: $primary-color;
   color: $light-primary-color;
 }

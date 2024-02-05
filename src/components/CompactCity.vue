@@ -10,7 +10,11 @@
   <div v-else class="compact-city">
     <h4 class="h4 compact-city__name">{{ nameRu }}</h4>
     <div class="compact-city__temp">Температура: {{ weatherData.temp_c }} С </div>
-    <div class="compact-city__temp-feels-like">Ощущается как {{ weatherData.feelslike_c }} С </div>
+    <div class="compact-city__temp-feels-like">Ощущается как: {{ weatherData.feelslike_c }} С </div>
+    <picture class="compact-city__picture">
+      <source :srcset=weatherData.condition.icon />
+      <img class="compact-city__img" :src=weatherData.condition.icon :alt=weatherData.condition.text />
+    </picture>
   </div>
 </template>
 
@@ -50,6 +54,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
   .compact-city {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -69,6 +74,20 @@ export default defineComponent({
 
     &__temp-feels-like {
       margin-bottom: 8%;
+    }
+
+    &__picture {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      width: 25%;
+      transform: translateY(-50%);
+    }
+
+    &__img {
+      z-index: -1;
+      width: 100%;
+      opacity: .5;
     }
   }
 </style>

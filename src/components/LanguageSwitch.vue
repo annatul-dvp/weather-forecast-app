@@ -2,13 +2,13 @@
 <div>
   <label class="lang" :class="langStatus.en">
     <input type="checkbox" class="input lang__checkbox lang__checkbox_eng" @click="setLanguage('en')">
-    <span class="lang__custom-checkbox">
+    <span class="lang__custom-checkbox lang__custom-checkbox_left">
     </span>
     English
   </label>
   <label class="lang" :class="langStatus.ru">
     <input type="checkbox" class="input lang__checkbox lang__checkbox_ru" @click="setLanguage('ru')">
-    <span class="lang__custom-checkbox"></span>
+    <span class="lang__custom-checkbox lang__custom-checkbox_right"></span>
     Русский
   </label>
 </div>
@@ -90,6 +90,16 @@ export default defineComponent({
     width: 100%;
     background-color: $primary-color;
     transition: all .4s ease-in-out;
+  }
+
+  .lang__custom-checkbox_left {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+  }
+
+  .lang__custom-checkbox_right {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
   }
 
   .lang_active {

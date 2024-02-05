@@ -9,6 +9,10 @@
     <div class="weather-for-day__data">Макс. температура: {{ day.day.maxtemp_c }} C / {{ day.day.maxtemp_c }} F</div>
     <div class="weather-for-day__data">Мин. температура: {{ day.day.mintemp_c }} C / {{ day.day.mintemp_c }} F</div>
     <div class="weather-for-day__data">Осадки: {{ day.day.totalprecip_mm }} милиметров / {{ day.day.totalprecip_in }} дюймов</div>
+    <picture class="weather-for-day__picture">
+      <source :srcset=day.day.condition.icon />
+      <img class="weather-for-day__img" :src=day.day.condition.icon :alt=day.day.condition.text />
+    </picture>
   </div>
 </template>
 
@@ -35,6 +39,7 @@ export default defineComponent({
   $middle-color: #ef8d50;
 
   .weather-for-day {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -51,6 +56,19 @@ export default defineComponent({
 
     &__data {
       text-align: left;
+    }
+
+    &__picture {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      width: 25%;
+    }
+
+    &__img {
+      z-index: -1;
+      width: 100%;
+      opacity: .5;
     }
   }
 
