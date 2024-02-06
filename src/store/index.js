@@ -2,12 +2,31 @@ import { createStore } from 'vuex'
 import { API_BASE_URL, theKey } from '@/config'
 import axios from 'axios'
 // При переводе через Rapid API (Google translate) с использованием хука useTranslation
-// import useTranslation from '@/hooks/useTranslation'
-// import useCityNameTranslation from '@/hooks/useCityNameTranslation'
+import useTranslation from '@/hooks/useTranslation'
 
 export default createStore({
   state: {
-    lang: 'ru',
+    lang: 'en',
+    websiteText: {
+      mainLinkTxt: 'Home',
+      linkAboutTxt: 'About',
+      footerTxt: 'Pet-project. Created by Anna Tuluptseva. 2024',
+      forecastTitleTxt: 'Weather forecast',
+      inputPlaceholder: 'Enter city name',
+      btnSearch: 'Search',
+      loadingDataMsg: 'Data is loading...',
+      errorLoadingDataMsg: 'Failed to load data',
+      tempTxt: 'Temperature: ',
+      feelslikeTxt: 'Feels like: ',
+      humidityTxt: 'Humidity: ',
+      precipTxt: 'Precipitation: ',
+      pressureTxt: 'Pressure: ',
+      sunriseTxt: 'Sunrise: ',
+      sunsetTxt: 'Sunset: ',
+      avgtempTxt: 'Avarage temperature: ',
+      maxtempTxt: 'Max. temperature: ',
+      mintempTxt: 'Min. temperature: '
+    },
     ip: null, // ip пользователя, по которому затем вычисляется его место расположение
     userData: null, // данные о пользователе и его расположении
     statuses: {
@@ -20,8 +39,13 @@ export default createStore({
     realtimeWeather: []
   },
   getters: {
+    getCurrentLang (state) {
+      return state.lang
+    },
+    getWebsiteText (state) {
+      return state.websiteText
+    },
     getDataStatuses (state) {
-      // console.log(state.statuses)
       return state.statuses
     },
     isDataLoading (state) {
@@ -38,6 +62,50 @@ export default createStore({
     }
   },
   mutations: {
+    setLang (state, lang) {
+      state.lang = lang
+    },
+    setWebsitedData (state) {
+      if (state.lang === 'ru') {
+        state.websiteText.mainLinkTxt = 'Главная'
+        state.websiteText.linkAboutTxt = 'О сайте'
+        state.websiteText.footerTxt = 'Pet-проект. Создан Анной Тулупцевой. 2024 г.'
+        state.websiteText.forecastTitleTxt = 'Прогноз погоды'
+        state.websiteText.inputPlaceholder = 'Введите город'
+        state.websiteText.btnSearch = 'Найти'
+        state.websiteText.loadingDataMsg = 'Идёт загрузка данных...'
+        state.websiteText.errorLoadingDataMsg = 'Не удалось загрузить данные'
+        state.websiteText.tempTxt = 'Температура: '
+        state.websiteText.feelslikeTxt = 'Ощущается как: '
+        state.websiteText.humidityTxt = 'Влажность: '
+        state.websiteText.precipTxt = 'Осадки: '
+        state.websiteText.pressureTxt = 'Давление: '
+        state.websiteText.sunriseTxt = 'Рассвет: '
+        state.websiteText.sunsetTxt = 'Закат: '
+        state.websiteText.avgtempTxt = 'Средняя температура: '
+        state.websiteText.maxtempTxt = 'Макс. температура: '
+        state.websiteText.mintempTxt = 'Мин. температура: '
+      } else {
+        state.websiteText.mainLinkTxt = 'Home'
+        state.websiteText.linkAboutTxt = 'About'
+        state.websiteText.footerTxt = 'Pet-project. Created by Anna Tuluptseva. 2024'
+        state.websiteText.forecastTitleTxt = 'Weather forecast'
+        state.websiteText.inputPlaceholder = 'Enter city name'
+        state.websiteText.btnSearch = 'Search'
+        state.websiteText.loadingDataMsg = 'Data is loading...'
+        state.websiteText.errorLoadingDataMsg = 'Failed to load data'
+        state.websiteText.tempTxt = 'Temperature: '
+        state.websiteText.feelslikeTxt = 'Feels like: '
+        state.websiteText.humidityTxt = 'Humidity: '
+        state.websiteText.precipTxt = 'Precipitation: '
+        state.websiteText.pressureTxt = 'Pressure: '
+        state.websiteText.sunriseTxt = 'Sunrise: '
+        state.websiteText.sunsetTxt = 'Sunset: '
+        state.websiteText.avgtempTxt = 'Avarage temperature: '
+        state.websiteText.maxtempTxt = 'Max. temperature: '
+        state.websiteText.mintempTxt = 'Min. temperature: '
+      }
+    },
     setIP (state, ip) {
       state.ip = ip
     },
@@ -51,7 +119,6 @@ export default createStore({
       state.statuses.isDataFailed = isDataFailed
     },
     setWeatherData (state, weatherData) {
-      // console.log(weatherData)
       state.currentWeatherData = {
         ...weatherData.current,
         country: weatherData.location.country,
@@ -60,8 +127,13 @@ export default createStore({
       }
       state.forecastWeatherData = weatherData.forecast.forecastday
     },
+    changeCityNameinWeatherData (state, newName) {
+      state.currentWeatherData = {
+        ...state.currentWeatherData,
+        city: newName
+      }
+    },
     setCityNameTranslation (state, translation) {
-      // console.log(translation)
       state.currentWeatherData = {
         ...state.currentWeatherData,
         countryRu: translation.nameTranslation.country,
@@ -132,6 +204,13 @@ export default createStore({
         commit('setDataFailed', true)
         console.log('Ошибка:', error)
         throw error
+      }
+    },
+    async toTranslatyCityName ({ commit }) {
+      if (this.state.lang === 'ru') {
+        commit('changeCityNameinWeatherData', (await useTranslation(this.state.currentWeatherData.city, 'en', 'ru')).trans)
+      } else {
+        commit('changeCityNameinWeatherData', (await useTranslation(this.state.currentWeatherData.city, 'ru', 'en')).trans)
       }
     }
   },

@@ -1,16 +1,16 @@
 <template>
   <div v-if="weatherStatus.isLoading" class="compact-city">
-    <h4 class="h4 compact-city__name">{{ nameRu }}</h4>
-    <div>Идёт загрузка данных о погоде...</div>
+    <h4 class="h4 compact-city__name">{{ theName }}</h4>
+    <div>{{ websiteText.loadingDataMsg }}</div>
   </div>
   <div v-else-if="weatherStatus.isFailed" class="compact-city">
-    <h4 class="h4 compact-city__name">{{ nameRu }}</h4>
-    <div>Не удалось загрузить данные о погоде</div>
+    <h4 class="h4 compact-city__name">{{ theName }}</h4>
+    <div>{{ websiteText.errorLoadingDataMsg }}</div>
   </div>
   <div v-else class="compact-city">
-    <h4 class="h4 compact-city__name">{{ nameRu }}</h4>
-    <div class="compact-city__temp">Температура: {{ weatherData.temp_c }} С </div>
-    <div class="compact-city__temp-feels-like">Ощущается как: {{ weatherData.feelslike_c }} С </div>
+    <h4 class="h4 compact-city__name">{{ theName }}</h4>
+    <div class="compact-city__temp">{{ websiteText.tempTxt }}{{ weatherData.temp_c }} С </div>
+    <div class="compact-city__temp-feels-like">{{ websiteText.feelslikeTxt }}{{ weatherData.feelslike_c }} С </div>
     <picture class="compact-city__picture">
       <source :srcset=weatherData.condition.icon />
       <img class="compact-city__img" :src=weatherData.condition.icon :alt=weatherData.condition.text />
@@ -20,15 +20,28 @@
 
 <script>
 import useCityWeatherInfo from '@/hooks/useCityWeatherInfo'
-import { defineComponent } from 'vue'
-// import { computed } from 'vue'
-// import { ref } from 'vue'
+import { defineComponent, watch, ref, computed } from 'vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   props: {
     names: { type: Object, required: true }
   },
   setup (props) {
+    const $store = useStore()
+    const lang = computed(() => $store.getters.getCurrentLang)
+    const websiteText = computed(() => $store.getters.getWebsiteText)
+
+    const theName = ref('')
+    watch(() => lang.value, (lang) => {
+      console.log('Изменился')
+      if (lang === 'ru') {
+        theName.value = props.names.ru
+      } else {
+        theName.value = props.names.eng
+      }
+    }, { immediate: true })
+
     const {
       weatherData,
       status: weatherStatus,
@@ -36,14 +49,11 @@ export default defineComponent({
       fetchWeather
     } = useCityWeatherInfo()
 
-    fetchWeather(props.names.eng)
-
-    // const weather = computed(() => weatherData)
+    fetchWeather(theName.value)
 
     return {
-      nameEng: props.names.eng,
-      nameRu: props.names.ru,
-      value: 125,
+      theName,
+      websiteText,
 
       weatherData,
       weatherStatus
@@ -59,7 +69,6 @@ export default defineComponent({
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    // height: 200px;
 
     &__name {
       margin-top: 8%;

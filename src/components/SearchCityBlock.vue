@@ -3,7 +3,7 @@
   <form action="" class="form search-form">
     <fieldset class="search-form__fieldset">
       <input type="text" list="cities_datalist" class="input search-form__input"
-        v-model.trim="searchedCity" placeholder="Введите город"
+        v-model.trim="searchedCity" :placeholder="websiteText.inputPlaceholder"
         @input="getAssumedCitiesList(searchedCity)"
         @mouseenter="setDatalistStatus('')">
       <div id="cities_datalist" class="custom-datalist search-form__custom-datalist" :class="datalistStatus"
@@ -15,10 +15,10 @@
       </div>
     </fieldset>
     <button type="submit" class="btn btn_dark-theme search-form__btn" @click.prevent="getSearchedCityData(searchedCity)">
-      <span class="btn__txt">Найти</span>
+      <span class="btn__txt"> {{ websiteText.btnSearch }}</span>
     </button>
-    <ModalWindow v-model:open="errorTheCityIsntFound">
-      Город не найден!
+    <ModalWindow v-model:open="errorTheCityIsntFound.status">
+      {{ errorTheCityIsntFound.text }}
     </ModalWindow>
   </form>
 </template>
@@ -26,7 +26,7 @@
 <script>
 import axios from 'axios'
 import { API_BASE_URL, theKey } from '@/config'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import { useStore } from 'vuex'
 import ModalWindow from '@/components/ModalWindow.vue'
 // import useCityNameTranslation from '@/hooks/useCityNameTranslation'
@@ -37,7 +37,28 @@ export default defineComponent({
     ModalWindow
   },
   setup () {
-    const errorTheCityIsntFound = ref(false) // error info, it will open ModalWindow if the city hasn't been found
+    const $store = useStore()
+    const lang = computed(() => $store.getters.getCurrentLang)
+    const websiteText = computed(() => $store.getters.getWebsiteText)
+    // const websiteText = ref({
+    //   inputPlaceholder: 'Enter city name',
+    //   btnSearch: 'Search'
+    // })
+
+    // watch(() => lang.value, (newLang) => {
+    //   if (newLang === 'ru') {
+    //     websiteText.value.inputPlaceholder = 'Введите город'
+    //     websiteText.value.btnSearch = 'Найти'
+    //   } else {
+    //     websiteText.value.inputPlaceholder = 'Enter city name'
+    //     websiteText.value.btnSearch = 'Search'
+    //   }
+    // }, { immediate: true })
+
+    const errorTheCityIsntFound = ref({ // error info, it will open ModalWindow if the city hasn't been found
+      status: false,
+      text: ''
+    })
     const searchedCity = ref('') // the name of city to be searched, changing with input data
     const searchedCityData = ref() // data of searched city, it's got after clicking button 'Search'
 
@@ -74,13 +95,16 @@ export default defineComponent({
       }
     }
 
-    const $store = useStore()
-
     // Getting full information of chosen city
     function getSearchedCityData (city) {
       if (foundCities.value.length === 0) {
         // if array of cities is empty, that means none city is found
-        errorTheCityIsntFound.value = true
+        errorTheCityIsntFound.value.status = true
+        if (this.lang === 'ru') {
+          errorTheCityIsntFound.value.text = 'Город не найден!'
+        } else {
+          errorTheCityIsntFound.value.text = 'A city has\'t been found'
+        }
       } else {
         axios.get(`${API_BASE_URL}forecast.json?key=${theKey}&q=${city}&days=3`)
           .then(response => {
@@ -108,6 +132,9 @@ export default defineComponent({
     }
 
     return {
+      lang,
+      websiteText,
+
       errorTheCityIsntFound,
       searchedCity,
       getAssumedCitiesList,

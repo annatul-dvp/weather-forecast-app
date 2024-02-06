@@ -1,14 +1,14 @@
 <template>
-  <div v-if="statuses.isDataFailed">Ошибка при загрузке данных!</div>
-  <div v-else-if="statuses.isDataLoading">Идёт загрузка....</div>
+  <div v-if="statuses.isDataFailed">{{ websiteText.loadingDataMsg }}</div>
+  <div v-else-if="statuses.isDataLoading">{{ websiteText.loadingDataMsg }}</div>
   <div v-else class="weather-for-day" v-for="(day) of forecastWeatherData" :key="day.date">
     <h4 class="weather-for-day__date">2024/01/30</h4>
-    <div class="weather-for-day__data astro-data">Восход солнца: {{ day.astro.sunrise }}</div>
-    <div class="weather-for-day__data astro-data">Закат солнца: {{ day.astro.sunset }}</div>
-    <div class="weather-for-day__data">Средняя температура: {{ day.day.avgtemp_c }} C / {{ day.day.avgtemp_c }} F</div>
-    <div class="weather-for-day__data">Макс. температура: {{ day.day.maxtemp_c }} C / {{ day.day.maxtemp_c }} F</div>
-    <div class="weather-for-day__data">Мин. температура: {{ day.day.mintemp_c }} C / {{ day.day.mintemp_c }} F</div>
-    <div class="weather-for-day__data">Осадки: {{ day.day.totalprecip_mm }} милиметров / {{ day.day.totalprecip_in }} дюймов</div>
+    <div class="weather-for-day__data astro-data">{{ websiteText.sunriseTxt }}{{ day.astro.sunrise }}</div>
+    <div class="weather-for-day__data astro-data">{{ websiteText.sunsetTxt }}{{ day.astro.sunset }}</div>
+    <div class="weather-for-day__data">{{ websiteText.avgtempTxt }}{{ day.day.avgtemp_c }} C / {{ day.day.avgtemp_c }} F</div>
+    <div class="weather-for-day__data">{{ websiteText.maxtempTxt }}{{ day.day.maxtemp_c }} C / {{ day.day.maxtemp_c }} F</div>
+    <div class="weather-for-day__data">{{ websiteText.mintempTxt }}{{ day.day.mintemp_c }} C / {{ day.day.mintemp_c }} F</div>
+    <div class="weather-for-day__data">{{ websiteText.precipTxt }}{{ day.day.totalprecip_mm }} милиметров / {{ day.day.totalprecip_in }} дюймов</div>
     <picture class="weather-for-day__picture">
       <source :srcset=day.day.condition.icon />
       <img class="weather-for-day__img" :src=day.day.condition.icon :alt=day.day.condition.text />
@@ -23,10 +23,13 @@ import { useStore } from 'vuex'
 export default defineComponent({
   setup () {
     const $store = useStore()
+    const websiteText = computed(() => $store.getters.getWebsiteText)
     const statuses = computed(() => $store.getters.getDataStatuses)
     const forecastWeatherData = computed(() => $store.getters.forecastWeatherData)
 
     return {
+      websiteText,
+
       statuses,
       forecastWeatherData
     }

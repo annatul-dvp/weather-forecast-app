@@ -5,8 +5,8 @@
   </nav> -->
   <div class="container header">
     <nav class="nav header__nav">
-      <router-link class="nav__link" to="/">Главная</router-link>
-      <router-link class="nav__link" to="/about">О сайте</router-link>
+      <router-link class="nav__link" to="/">{{ websiteText.mainLinkTxt }}</router-link>
+      <router-link class="nav__link" to="/about">{{ websiteText.linkAboutTxt }}</router-link>
     </nav>
     <SearchCityBlock class="header__search"/>
     <LanguageSwitch class="header__lang-switch"/>
@@ -16,7 +16,7 @@
     <a href="https://www.weatherapi.com/" title="Free Weather API" class="footer__link">
       <img src='//cdn.weatherapi.com/v4/images/weatherapi_logo.png' alt="Weather data by WeatherAPI.com" border="0" class="footer__img">
     </a>
-    <div class="footer__text">Pet-проект. Создан Анной Тулупцевой. 2024 г.</div>
+    <div class="footer__text">{{ websiteText.footerTxt }}</div>
   </footer>
   <div id="teleport-target"></div>
 </template>
@@ -27,6 +27,7 @@
 
 // // register directive v-number and component <number>
 // Vue.use(VueNumberFormat, { precision: 4 })
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 import SearchCityBlock from './components/SearchCityBlock.vue'
 import LanguageSwitch from './components/LanguageSwitch.vue'
@@ -39,6 +40,11 @@ export default {
   setup () {
     const $store = useStore()
     $store.dispatch('getDefaultData')
+    const websiteText = computed(() => $store.getters.getWebsiteText)
+
+    return {
+      websiteText
+    }
   }
 }
 
@@ -198,19 +204,6 @@ export default {
 
     &__txt {
       @include text-to-choose($light-primary-color);
-      // position: relative;
-
-      // &::after {
-      //   content: '';
-      //   position: absolute;
-      //   left: 0;
-      //   bottom: -2px;
-      //   width: 100%;
-      //   height: 2px;
-      //   border-bottom: 2px solid $light-primary-color;
-      //   opacity: 0;
-      //   transition: all .5s ease-in-out;
-      // }
     }
 
   }

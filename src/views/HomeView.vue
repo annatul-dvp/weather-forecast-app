@@ -34,7 +34,10 @@ export default defineComponent({
   $focused-color: #b96246;
   $light-color: #eec583;
   $middle-color: #ef8d50;
+
   $current-city-height: 350px;
+  $header-height: 80px;
+  $footer-height: 50px;
 
   .current-city {
     height: $current-city-height;
@@ -44,7 +47,7 @@ export default defineComponent({
     position: relative;
     width: 100%;
     /* window height - current cyty's height - header height - footer height */
-    height: calc(100vh - $current-city-height - 127px);
+    height: calc(100vh - $current-city-height - $header-height - $footer-height);
     overflow: hidden;
   }
 

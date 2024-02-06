@@ -40,7 +40,9 @@ export default defineComponent({
     setStatus()
 
     function setLanguage (lang) {
-      $store.state.lang = lang
+      $store.commit('setLang', lang)
+      $store.commit('setWebsitedData')
+      $store.dispatch('toTranslatyCityName')
       setStatus()
     }
 
@@ -53,7 +55,6 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-  // $lang-width: calc(50% - 10px);
   $primary-color: #22475a;
   $light-primary-color: #ffffff;
   $active-color: #6e4241;
@@ -125,35 +126,6 @@ export default defineComponent({
       }
     }
   }
-
-  // .lang__checkbox {
-  //   display: none;
-  // }
-
-  // .lang__custom-checkbox {
-  //   z-index: -1;
-  //   position: absolute;
-  //   top: 0;
-  //   left: 0;
-  //   right: 0;
-  //   bottom: 0;
-  //   display: inline-block;
-  //   text-align: center;
-  //   height: 100%;
-  //   width: 100%;
-  //   background-color: $primary-color;
-  //   transition: all .4s ease-in-out;
-  // }
-
-  // .lang__custom-checkbox_left {
-  //   border-top-left-radius: 6px;
-  //   border-bottom-left-radius: 6px;
-  // }
-
-  // .lang__custom-checkbox_right {
-  //   border-top-right-radius: 6px;
-  //   border-bottom-right-radius: 6px;
-  // }
 
   .lang_active {
     .lang__custom-checkbox {

@@ -11,23 +11,23 @@
       <img class="detailed-weather__img" :src=currentWeatherData.condition.icon :alt=currentWeatherData.condition.text />
     </picture>
     <div class="detailed-weather__info">
-      <span class="span-smth-name">Температура:</span>
+      <span class="span-smth-name">{{ websiteText.tempTxt }}</span>
       <span class="detailed-weather__temp">{{ currentWeatherData.temp_c }} C / {{ currentWeatherData.temp_f }} F</span>
     </div>
     <div class="detailed-weather__info">
-      <span class="span-smth-name">Ощущается, как:</span>
+    <span class="span-smth-name">{{ websiteText.feelslikeTxt }}</span>
       <span class="detailed-weather__curr-temp">{{ currentWeatherData.feelslike_c }} C / {{ currentWeatherData.feelslike_f }} F</span>
     </div>
     <div class="detailed-weather__info">
-      <span class="span-smth-name">Осадки:</span>
+      <span class="span-smth-name">{{ websiteText.precipTxt }}</span>
       <span class="detailed-weather__precip">{{ currentWeatherData.precip_mm }} миллиметров / {{ currentWeatherData.precip_in }} дюймов</span>
     </div>
     <div class="detailed-weather__info">
-      <span class="span-smth-name">Влажность:</span>
+      <span class="span-smth-name">{{ websiteText.humidityTxt }}</span>
       <span class="detailed-weather__humidity">{{ currentWeatherData.humidity }}%</span>
     </div>
     <div class="detailed-weather__info">
-      <span class="span-smth-name">Давление:</span>
+      <span class="span-smth-name">{{ websiteText.pressureTxt }}</span>
       <span class="detailed-weather__pressure">{{ currentWeatherData.pressure_mb }} миллибар / {{ currentWeatherData.pressure_in }} дюймов</span>
     </div>
   </div>
@@ -41,11 +41,33 @@ import { useStore } from 'vuex'
 export default defineComponent({
   setup () {
     const $store = useStore()
+    const websiteText = computed(() => $store.getters.getWebsiteText)
     const statuses = computed(() => $store.getters.getDataStatuses)
     const currentCityName = computed(() => $store.getters.currentWeatherData.city)
     const currentWeatherData = computed(() => $store.getters.currentWeatherData)
 
+    // const websiteText = ref()
+
+    // watch(() => lang.value, (lang) => {
+    //   console.log('Изменился')
+    //   if (lang === 'ru') {
+    //     theName.value = props.names.ru
+    //     websiteText.value.loadingDataMsg = 'Идёт загрузка данных о погоде...'
+    //     websiteText.value.errorLoadingDataMsg = 'Не удалось загрузить данные о погоде'
+    //     websiteText.value.tepmTxt = 'Температура: '
+    //     websiteText.value.feelslikeTxt = 'Ощущается как: '
+    //   } else {
+    //     theName.value = props.names.eng
+    //     websiteText.value.loadingDataMsg = 'Weather data is loading...'
+    //     websiteText.value.errorLoadingDataMsg = 'Failed to load weather data'
+    //     websiteText.value.tepmTxt = 'Temperature: '
+    //     websiteText.value.feelslikeTxt = 'Feels like: '
+    //   }
+    // }, { immediate: true })
+
     return {
+      websiteText,
+
       statuses,
       currentCityName,
       currentWeatherData
