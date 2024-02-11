@@ -12,23 +12,23 @@
     </picture>
     <div class="detailed-weather__info">
       <span class="span-smth-name">{{ websiteText.tempTxt }}</span>
-      <span class="detailed-weather__temp">{{ currentWeatherData.temp_c }} C / {{ currentWeatherData.temp_f }} F</span>
+      <span class="detailed-weather__temp">{{ currentWeatherData.temp_c_txt }} / {{ currentWeatherData.temp_f_txt }}</span>
     </div>
     <div class="detailed-weather__info">
     <span class="span-smth-name">{{ websiteText.feelslikeTxt }}</span>
-      <span class="detailed-weather__curr-temp">{{ currentWeatherData.feelslike_c }} C / {{ currentWeatherData.feelslike_f }} F</span>
+      <span class="detailed-weather__curr-temp">{{ currentWeatherData.feelslike_c_txt }} / {{ currentWeatherData.feelslike_f_txt }}</span>
     </div>
     <div class="detailed-weather__info">
       <span class="span-smth-name">{{ websiteText.precipTxt }}</span>
-      <span class="detailed-weather__precip">{{ currentWeatherData.precip_mm }} миллиметров / {{ currentWeatherData.precip_in }} дюймов</span>
+      <span class="detailed-weather__precip">{{ currentWeatherData.precip_mm_txt }} / {{ currentWeatherData.precip_in_txt }} </span>
     </div>
     <div class="detailed-weather__info">
       <span class="span-smth-name">{{ websiteText.humidityTxt }}</span>
-      <span class="detailed-weather__humidity">{{ currentWeatherData.humidity }}%</span>
+      <span class="detailed-weather__humidity">{{ currentWeatherData.humidity_txt }}</span>
     </div>
     <div class="detailed-weather__info">
       <span class="span-smth-name">{{ websiteText.pressureTxt }}</span>
-      <span class="detailed-weather__pressure">{{ currentWeatherData.pressure_mb }} миллибар / {{ currentWeatherData.pressure_in }} дюймов</span>
+      <span class="detailed-weather__pressure">{{ currentWeatherData.pressure_mb_txt }} / {{ currentWeatherData.pressure_in_txt }} </span>
     </div>
   </div>
 </template>
@@ -36,15 +36,34 @@
 <script>
 import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
+// import numberFormat from '@/helpers/NumberFormat.js'
 // import useTranslation from '@/hooks/useTranslation'
 
 export default defineComponent({
   setup () {
     const $store = useStore()
+    const lang = computed(() => $store.getters.getCurrentLang)
     const websiteText = computed(() => $store.getters.getWebsiteText)
     const statuses = computed(() => $store.getters.getDataStatuses)
     const currentCityName = computed(() => $store.getters.currentWeatherData.city)
     const currentWeatherData = computed(() => $store.getters.currentWeatherData)
+    // const currentWeatherData = computed(() => {
+    //   return {
+    //     condition: {
+    //       icon: $store.getters.currentWeatherData.condition.icon,
+    //       text: $store.getters.currentWeatherData.condition.text
+    //     },
+    //     temp_c: numberFormat(lang, 'celsius', Number($store.getters.currentWeatherData.temp_c)),
+    //     temp_f: numberFormat(lang, 'fahrenheit', Number($store.getters.currentWeatherData.temp_f)),
+    //     feelslike_c: numberFormat(lang, 'celsius', Number($store.getters.currentWeatherData.feelslike_c)),
+    //     feelslike_f: numberFormat(lang, 'fahrenheit', Number($store.getters.currentWeatherData.feelslike_f)),
+    //     precip_mm: numberFormat(lang, 'milliliter', Number($store.getters.currentWeatherData.precip_mm)),
+    //     precip_in: numberFormat(lang, 'inch', Number($store.getters.currentWeatherData.precip_in)),
+    //     humidity: numberFormat(lang, 'percent', Number($store.getters.currentWeatherData.humidity)),
+    //     pressure_mb: numberFormat(lang, 'millibar', Number($store.getters.currentWeatherData.pressure_mb)),
+    //     pressure_in: numberFormat(lang, 'inch', Number($store.getters.currentWeatherData.pressure_in))
+    //   }
+    // })
 
     // const websiteText = ref()
 
@@ -66,11 +85,13 @@ export default defineComponent({
     // }, { immediate: true })
 
     return {
+      lang,
       websiteText,
 
       statuses,
       currentCityName,
       currentWeatherData
+      // temp_c: numberFormat(lang, 'celcus', Number(currentWeatherData.value.temp_c))
     }
   }
 })

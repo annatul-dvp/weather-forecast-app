@@ -5,10 +5,10 @@
     <h4 class="weather-for-day__date">2024/01/30</h4>
     <div class="weather-for-day__data astro-data">{{ websiteText.sunriseTxt }}{{ day.astro.sunrise }}</div>
     <div class="weather-for-day__data astro-data">{{ websiteText.sunsetTxt }}{{ day.astro.sunset }}</div>
-    <div class="weather-for-day__data">{{ websiteText.avgtempTxt }}{{ day.day.avgtemp_c }} C / {{ day.day.avgtemp_c }} F</div>
-    <div class="weather-for-day__data">{{ websiteText.maxtempTxt }}{{ day.day.maxtemp_c }} C / {{ day.day.maxtemp_c }} F</div>
-    <div class="weather-for-day__data">{{ websiteText.mintempTxt }}{{ day.day.mintemp_c }} C / {{ day.day.mintemp_c }} F</div>
-    <div class="weather-for-day__data">{{ websiteText.precipTxt }}{{ day.day.totalprecip_mm }} милиметров / {{ day.day.totalprecip_in }} дюймов</div>
+    <div class="weather-for-day__data">{{ websiteText.avgtempTxt }}{{ day.day.avgtemp_c_txt }} / {{ day.day.avgtemp_f_txt }}</div>
+    <div class="weather-for-day__data">{{ websiteText.maxtempTxt }}{{ day.day.maxtemp_c_txt }} / {{ day.day.maxtemp_f_txt }}</div>
+    <div class="weather-for-day__data">{{ websiteText.mintempTxt }}{{ day.day.mintemp_c_txt }} / {{ day.day.mintemp_f_txt }}</div>
+    <div class="weather-for-day__data">{{ websiteText.precipTxt }}{{ day.day.totalprecip_mm_txt }} / {{ day.day.totalprecip_in_txt }}</div>
     <picture class="weather-for-day__picture">
       <source :srcset=day.day.condition.icon />
       <img class="weather-for-day__img" :src=day.day.condition.icon :alt=day.day.condition.text />

@@ -3,6 +3,8 @@ import { API_BASE_URL, theKey } from '@/config'
 import axios from 'axios'
 // При переводе через Rapid API (Google translate) с использованием хука useTranslation
 import useTranslation from '@/hooks/useTranslation'
+import undateForecastWeatherData from '@/hooks/useForecastWeatherFormat'
+import undateCurrentWeatherData from '@/hooks/useCurrentWeatherFormat'
 
 export default createStore({
   state: {
@@ -119,19 +121,22 @@ export default createStore({
       state.statuses.isDataFailed = isDataFailed
     },
     setWeatherData (state, weatherData) {
-      state.currentWeatherData = {
-        ...weatherData.current,
-        country: weatherData.location.country,
-        region: weatherData.location.region,
-        city: weatherData.location.name
-      }
-      state.forecastWeatherData = weatherData.forecast.forecastday
+      state.currentWeatherData = undateCurrentWeatherData(state.lang, weatherData.current, weatherData.location)
+      console.log(weatherData.forecast.forecastday)
+
+      state.forecastWeatherData = undateForecastWeatherData(state.lang, weatherData.forecast.forecastday)
     },
-    changeCityNameinWeatherData (state, newName) {
+    changeCityNameLang (state, newName) {
       state.currentWeatherData = {
         ...state.currentWeatherData,
         city: newName
       }
+    },
+    changeCurrentWeatherData (state) {
+      state.currentWeatherData = undateCurrentWeatherData(state.lang, state.currentWeatherData)
+    },
+    changeForecastWeatherData (state) {
+      state.forecastWeatherData = undateForecastWeatherData(state.lang, state.forecastWeatherData)
     },
     setCityNameTranslation (state, translation) {
       state.currentWeatherData = {
@@ -206,11 +211,11 @@ export default createStore({
         throw error
       }
     },
-    async toTranslatyCityName ({ commit }) {
+    async toTranslateCityName ({ commit }) {
       if (this.state.lang === 'ru') {
-        commit('changeCityNameinWeatherData', (await useTranslation(this.state.currentWeatherData.city, 'en', 'ru')).trans)
+        commit('changeCityNameLang', (await useTranslation(this.state.currentWeatherData.city, 'en', 'ru')).trans)
       } else {
-        commit('changeCityNameinWeatherData', (await useTranslation(this.state.currentWeatherData.city, 'ru', 'en')).trans)
+        commit('changeCityNameLang', (await useTranslation(this.state.currentWeatherData.city, 'ru', 'en')).trans)
       }
     }
   },

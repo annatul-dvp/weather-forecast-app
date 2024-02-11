@@ -9,8 +9,8 @@
   </div>
   <div v-else class="compact-city">
     <h4 class="h4 compact-city__name">{{ theName }}</h4>
-    <div class="compact-city__temp">{{ websiteText.tempTxt }}{{ weatherData.temp_c }} С </div>
-    <div class="compact-city__temp-feels-like">{{ websiteText.feelslikeTxt }}{{ weatherData.feelslike_c }} С </div>
+    <div class="compact-city__temp">{{ websiteText.tempTxt }}{{ weatherData.temp_c_txt }}</div>
+    <div class="compact-city__temp-feels-like">{{ websiteText.feelslikeTxt }}{{ weatherData.feelslike_c_txt }}</div>
     <picture class="compact-city__picture">
       <source :srcset=weatherData.condition.icon />
       <img class="compact-city__img" :src=weatherData.condition.icon :alt=weatherData.condition.text />

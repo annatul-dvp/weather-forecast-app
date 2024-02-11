@@ -42,7 +42,9 @@ export default defineComponent({
     function setLanguage (lang) {
       $store.commit('setLang', lang)
       $store.commit('setWebsitedData')
-      $store.dispatch('toTranslatyCityName')
+      $store.commit('changeCurrentWeatherData')
+      $store.commit('changeForecastWeatherData')
+      $store.dispatch('toTranslateCityName')
       setStatus()
     }
 
