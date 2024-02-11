@@ -13,6 +13,7 @@
           {{ city.name +', ' + city.country }}
         </div>
       </div>
+      <div id="msg-teleport-target"></div>
     </fieldset>
     <button type="submit" class="btn btn_dark-theme search-form__btn" @click.prevent="getSearchedCityData(searchedCity)">
       <span class="btn__txt"> {{ websiteText.btnSearch }}</span>
@@ -20,46 +21,58 @@
     <ModalWindow v-model:open="errorTheCityIsntFound.status">
       {{ errorTheCityIsntFound.text }}
     </ModalWindow>
+    <ModalMessage v-model:shown="isTypedTextErrorShown">
+      {{ isTypedTextErrorShown }}
+    </ModalMessage>
   </form>
 </template>
 
 <script>
 import axios from 'axios'
 import { API_BASE_URL, theKey } from '@/config'
-import { defineComponent, ref, computed } from 'vue'
+import { defineComponent, ref, computed, watch } from 'vue'
 import { useStore } from 'vuex'
 import ModalWindow from '@/components/ModalWindow.vue'
+import ModalMessage from './ModalMessage.vue'
+import isLanguageCorrect from '@/hooks/useLanguageCheck'
 // import useCityNameTranslation from '@/hooks/useCityNameTranslation'
 // import useTranslation from '@/hooks/useTranslation.js'
 
 export default defineComponent({
   components: {
-    ModalWindow
+    ModalWindow,
+    ModalMessage
   },
   setup () {
     const $store = useStore()
     const lang = computed(() => $store.getters.getCurrentLang)
     const websiteText = computed(() => $store.getters.getWebsiteText)
-    // const websiteText = ref({
-    //   inputPlaceholder: 'Enter city name',
-    //   btnSearch: 'Search'
-    // })
-
-    // watch(() => lang.value, (newLang) => {
-    //   if (newLang === 'ru') {
-    //     websiteText.value.inputPlaceholder = 'Введите город'
-    //     websiteText.value.btnSearch = 'Найти'
-    //   } else {
-    //     websiteText.value.inputPlaceholder = 'Enter city name'
-    //     websiteText.value.btnSearch = 'Search'
-    //   }
-    // }, { immediate: true })
 
     const errorTheCityIsntFound = ref({ // error info, it will open ModalWindow if the city hasn't been found
       status: false,
       text: ''
     })
+
     const searchedCity = ref('') // the name of city to be searched, changing with input data
+    const isTypedTextErrorShown = ref(false)
+
+    function toShowTypedTextError (isShown) {
+      isTypedTextErrorShown.value = isShown
+    }
+
+    watch(() => searchedCity.value, (text) => {
+      if (lang.value === 'ru' & !isLanguageCorrect(lang.value, text) & text !== '') {
+        searchedCity.value = searchedCity.value.substring(0, searchedCity.value.length - 1)
+        isTypedTextErrorShown.value = 'Введён некорректный символ! Проверьте язык ввода.'
+        setTimeout(toShowTypedTextError, 4000, false)
+      }
+      if (lang.value === 'en' & !isLanguageCorrect(lang.value, text) & text !== '') {
+        searchedCity.value = searchedCity.value.substring(0, searchedCity.value.length - 1)
+        isTypedTextErrorShown.value = 'Incorrect symbol! Check input language settings.'
+        setTimeout(toShowTypedTextError, 4000, false)
+      }
+    })
+
     const searchedCityData = ref() // data of searched city, it's got after clicking button 'Search'
 
     // list of found assumed cities
@@ -135,13 +148,17 @@ export default defineComponent({
       lang,
       websiteText,
 
-      errorTheCityIsntFound,
       searchedCity,
+      isTypedTextErrorShown,
+      toShowTypedTextError,
+
+      toChooseCity,
+
       getAssumedCitiesList,
       foundCities,
+      errorTheCityIsntFound,
       datalistStatus,
       setDatalistStatus,
-      toChooseCity,
 
       getSearchedCityData,
       searchedCityData

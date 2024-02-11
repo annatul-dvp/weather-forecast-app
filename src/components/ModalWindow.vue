@@ -56,7 +56,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 $primary-color: #22475a;
 $light-primary-color: #ffffff;
 $active-color: #6e4241;

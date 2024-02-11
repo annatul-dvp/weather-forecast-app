@@ -2,9 +2,7 @@ import numberFormat from '@/helpers/NumberFormat.js'
 
 export default function undateForecastWeatherData (lang, listOfDays) {
   const nextDaysWeather = []
-  console.log(listOfDays)
   for (const dayWeather of listOfDays) {
-    console.log(dayWeather)
     nextDaysWeather.push({
       ...dayWeather,
       astro: {

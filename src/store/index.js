@@ -122,7 +122,7 @@ export default createStore({
     },
     setWeatherData (state, weatherData) {
       state.currentWeatherData = undateCurrentWeatherData(state.lang, weatherData.current, weatherData.location)
-      console.log(weatherData.forecast.forecastday)
+      // console.log(weatherData.forecast.forecastday)
 
       state.forecastWeatherData = undateForecastWeatherData(state.lang, weatherData.forecast.forecastday)
     },
@@ -175,10 +175,10 @@ export default createStore({
             console.log(error)
           })
         if (this.state.lang === 'en') {
-          console.log('English')
+          // console.log('English')
           await axios.get(`${API_BASE_URL}forecast.json?key=${theKey}&q=${this.state.userData.city}&days=3`)
             .then(response => {
-              console.log(response.data)
+              // console.log(response.data)
               commit('setWeatherData', response.data)
             })
             .catch(error => {
@@ -186,7 +186,7 @@ export default createStore({
               console.log(error)
             })
         } else {
-          console.log('Russian')
+          // console.log('Russian')
           await axios.get(`${API_BASE_URL}forecast.json?key=${theKey}&q=${this.state.userData.lat},${this.state.userData.lon}&days=3&lang=ru`)
             .then(response => {
               commit('setWeatherData', response.data)

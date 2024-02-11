@@ -34,7 +34,6 @@ export default defineComponent({
 
     const theName = ref('')
     watch(() => lang.value, (lang) => {
-      console.log('Изменился')
       if (lang === 'ru') {
         theName.value = props.names.ru
       } else {
