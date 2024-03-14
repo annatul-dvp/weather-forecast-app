@@ -47,42 +47,6 @@ export default defineComponent({
     const statuses = computed(() => $store.getters.getDataStatuses)
     const currentCityName = computed(() => $store.getters.currentWeatherData.city)
     const currentWeatherData = computed(() => $store.getters.currentWeatherData)
-    // const currentWeatherData = computed(() => {
-    //   return {
-    //     condition: {
-    //       icon: $store.getters.currentWeatherData.condition.icon,
-    //       text: $store.getters.currentWeatherData.condition.text
-    //     },
-    //     temp_c: numberFormat(lang, 'celsius', Number($store.getters.currentWeatherData.temp_c)),
-    //     temp_f: numberFormat(lang, 'fahrenheit', Number($store.getters.currentWeatherData.temp_f)),
-    //     feelslike_c: numberFormat(lang, 'celsius', Number($store.getters.currentWeatherData.feelslike_c)),
-    //     feelslike_f: numberFormat(lang, 'fahrenheit', Number($store.getters.currentWeatherData.feelslike_f)),
-    //     precip_mm: numberFormat(lang, 'milliliter', Number($store.getters.currentWeatherData.precip_mm)),
-    //     precip_in: numberFormat(lang, 'inch', Number($store.getters.currentWeatherData.precip_in)),
-    //     humidity: numberFormat(lang, 'percent', Number($store.getters.currentWeatherData.humidity)),
-    //     pressure_mb: numberFormat(lang, 'millibar', Number($store.getters.currentWeatherData.pressure_mb)),
-    //     pressure_in: numberFormat(lang, 'inch', Number($store.getters.currentWeatherData.pressure_in))
-    //   }
-    // })
-
-    // const websiteText = ref()
-
-    // watch(() => lang.value, (lang) => {
-    //   console.log('Изменился')
-    //   if (lang === 'ru') {
-    //     theName.value = props.names.ru
-    //     websiteText.value.loadingDataMsg = 'Идёт загрузка данных о погоде...'
-    //     websiteText.value.errorLoadingDataMsg = 'Не удалось загрузить данные о погоде'
-    //     websiteText.value.tepmTxt = 'Температура: '
-    //     websiteText.value.feelslikeTxt = 'Ощущается как: '
-    //   } else {
-    //     theName.value = props.names.eng
-    //     websiteText.value.loadingDataMsg = 'Weather data is loading...'
-    //     websiteText.value.errorLoadingDataMsg = 'Failed to load weather data'
-    //     websiteText.value.tepmTxt = 'Temperature: '
-    //     websiteText.value.feelslikeTxt = 'Feels like: '
-    //   }
-    // }, { immediate: true })
 
     return {
       lang,
@@ -98,40 +62,33 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-  %flex-column-left-sided {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
+  @import '@/styles/variables.scss';
+  @import '@/styles/mixins.scss';
 
   .detailed-weather {
     position: relative;
-    @extend %flex-column-left-sided;
-    flex-wrap: wrap;
-    justify-content: center;
+    @include display-flex (column, center, flex-start, wrap);
 
     &__city-name,
     &__current-time{
-      @extend %flex-column-left-sided;
       padding-left: 5%;
       width: 50%;
       height: 50%;
     }
 
     &__city-name {
-      justify-content: end;
+      @include display-flex (column, end, flex-start);
       font-size: 4rem;
     }
 
     &__current-time {
-      justify-content: start;
+      @include display-flex (column, start, flex-start);
       font-size: 1rem;
       font-style: italic;
     }
 
     &__info {
-      display: flex;
-      flex-direction: row;
+      @include display-flex (row, left);
       width: 50%;
       margin-bottom: 25px;
       font-size: 1.2rem;
@@ -141,15 +98,97 @@ export default defineComponent({
       position: absolute;
       top: 50px;
       left: 6%;
-      width: 60x;
+      width: 60px;
       height: 100%;
-
     }
 
     &__img {
       z-index: -1;
       width: 100%;
       opacity: .5;
+    }
+  }
+
+  @media screen and (orientation: $orient-portrait){
+    .detailed-weather {
+      @include display-flex (row, space-between, normal, wrap);
+
+      &__city-name,
+      &__current-time{
+        padding-left: 0;
+        width: 100%;
+      }
+
+      &__city-name {
+        @include display-flex (column, end, center);
+        border-top: 2px solid $primary-color;
+        height: 20%;
+      }
+
+      &__current-time {
+        @include display-flex (column, start, center);
+        border-bottom: 2px solid $primary-color;
+        height: 15%;
+      }
+
+      &__info {
+        @include display-flex (row, center);
+        width: 100%;
+        margin-bottom: 10px;
+
+        &:nth-of-type(3) {
+          margin-top: 10px;
+        }
+      }
+
+      &__picture {
+        position: relative;
+        top: 0;
+        left: 50%;
+        height: 5%;
+        transform: translateX(-50%) translateY(-250%);
+      }
+    }
+  }
+
+  @media screen and (orientation: $orient-portrait) and (max-width: 900px){
+    .detailed-weather {
+      &__city-name {
+        height: 22%;
+      }
+
+      &__current-time {
+        height: 18%;
+      }
+
+      &__info {
+        margin-bottom: 5px;
+
+        &:nth-of-type(3) {
+          margin-top: 5px;
+        }
+      }
+
+      &__picture {
+        transform: translateX(-50%) translateY(-320%);
+      }
+    }
+  }
+
+  @media screen and (orientation: $orient-portrait) and (max-width: 700px){
+    .detailed-weather {
+      &__city-name {
+        font-size: 3.5rem;
+        border-top: none;
+      }
+
+      &__current-time {
+        border-bottom: none;
+      }
+
+      &__picture {
+        transform: translateX(-50%) translateY(-250%);
+      }
     }
   }
 </style>

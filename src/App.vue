@@ -29,8 +29,8 @@
 // Vue.use(VueNumberFormat, { precision: 4 })
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import SearchCityBlock from './components/SearchCityBlock.vue'
-import LanguageSwitch from './components/LanguageSwitch.vue'
+import SearchCityBlock from '@/components/SearchCityBlock.vue'
+import LanguageSwitch from '@/components/LanguageSwitch.vue'
 
 export default {
   components: {
@@ -51,33 +51,11 @@ export default {
 </script>
 
 <style lang="scss">
-  $primary-color: #22475a;
-  $light-primary-color: #ffffff;
-  $active-color: #6e4241;
-  $focused-color: #b96246;
-  $light-color: #eec583;
-  $middle-color: #ef8d50;
-
-  $header-height: 80px;
-  $footer-height: 50px;
-
-  @mixin text-to-choose ($border-color) {
-    position: relative;
-
-      &::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: -2px;
-        width: 100%;
-        height: 2px;
-        border-bottom: 2px solid $border-color;
-        opacity: 0;
-        transition: all .5s ease-in-out;
-      }
-  }
+  @import '@/styles/variables.scss';
+  @import '@/styles/mixins.scss';
 
   * {
+    cursor: default;
     box-sizing: border-box;
     padding: 0;
     margin: 0;
@@ -124,15 +102,11 @@ export default {
   }
 
   .header {
-    display: flex;
-    flex-direction: row;
+    @include display-flex (row, space-between);
     height: $header-height;
 
     &__nav {
-      display: flex;
-      flex-direction: row;
-      justify-content: left;
-      align-items: center;
+      @include display-flex (row, left, center);
       width: 50%;
     }
 
@@ -141,9 +115,8 @@ export default {
     }
 
     &__lang-switch {
+      margin-left: 10px;
       width: 15%;
-      padding-left: 10px;
-      padding-right: 10px;
       border-radius: 5px;
     }
   }
@@ -214,6 +187,7 @@ export default {
   }
 
   .input {
+    cursor: pointer;
     padding: 2px;
     border-radius: 6px;
     border: 1px solid $primary-color;
@@ -243,10 +217,7 @@ export default {
   }
 
   .footer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    @include display-flex (row, center, center);
     padding-top: 10px;
     padding-bottom: 10px;
     height: $footer-height;
@@ -264,6 +235,66 @@ export default {
     &__img {
       height: 100%;
     }
+  }
+
+  @media screen and (orientation: $orient-portrait){
+    html {
+      font-size: 24px;
+    }
+
+    .header {
+      height: $header-big-height;
+
+      &__nav {
+        width: 30%;
+      }
+
+      &__search {
+        width: 55%;
+      }
+    }
+
+    .footer {
+      height: $footer-big-height;
+    }
+  }
+
+  @media screen and (orientation: $orient-portrait) and (max-width: 900px){
+    html {
+      font-size: 20px;
+    }
+    .header {
+      height: $header-middle-height
+    }
+
+    .footer {
+      height: $footer-middle-height;
+    }
+  }
+
+  @media screen and (orientation: $orient-portrait) and (max-width: 700px){
+    html {
+      font-size: 16px;
+    }
+
+    .container {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-left: 3%;
+      padding-right: 3%;
+    }
+
+    .header {
+      height: $header-height
+    }
+
+    .footer {
+      height: $footer-height;
+    }
+  }
+
+  @media screen and (orientation: $orient-portrait) and (max-width: 520px){
+
   }
 
 </style>

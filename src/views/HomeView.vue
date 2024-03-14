@@ -26,18 +26,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-  // @use "sass:math";
-
-  $primary-color: #22475a;
-  $light-primary-color: #ffffff;
-  $active-color: #6e4241;
-  $focused-color: #b96246;
-  $light-color: #eec583;
-  $middle-color: #ef8d50;
-
-  $current-city-height: 350px;
-  $header-height: 80px;
-  $footer-height: 50px;
+  @import '@/styles/variables.scss';
 
   .current-city {
     height: $current-city-height;
@@ -49,6 +38,39 @@ export default defineComponent({
     /* window height - current cyty's height - header height - footer height */
     height: calc(100vh - $current-city-height - $header-height - $footer-height);
     overflow: hidden;
+  }
+
+  @media screen and (orientation: $orient-portrait){
+    .current-city {
+      height: $current-city-big-height;
+    }
+
+    .additional-info {
+      /* window height - current cyty's height - header height - footer height */
+      height: calc(100vh - $current-city-big-height - $header-big-height - $footer-big-height);
+    }
+  }
+
+  @media screen and (orientation: $orient-portrait) and (max-width: 900px){
+    .current-city {
+      height: $current-city-middle-height;
+    }
+
+    .additional-info {
+      /* window height - current cyty's height - header height - footer height */
+      height: calc(100vh - $current-city-middle-height - $header-middle-height - $footer-middle-height);
+    }
+  }
+
+  @media screen and (orientation: $orient-portrait) and (max-width: 700px){
+    .current-city {
+      height: $current-city-v-height;
+    }
+
+    .additional-info {
+      /* window height - current cyty's height - header height - footer height */
+      height: calc(100vh - $current-city-v-height - $header-height - $footer-height);
+    }
   }
 
 </style>

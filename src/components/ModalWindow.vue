@@ -57,12 +57,8 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-$primary-color: #22475a;
-$light-primary-color: #ffffff;
-$active-color: #6e4241;
-$focused-color: #b96246;
-$light-color: #eec583;
-$middle-color: #ef8d50;
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
 
 .teleport-blackout {
   z-index: 1000;
@@ -89,9 +85,7 @@ $middle-color: #ef8d50;
 }
 .teleport-modal__content {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  @include display-flex (column, center);
   min-width: 500px;
   max-width: 50%;
   min-height: 300px;

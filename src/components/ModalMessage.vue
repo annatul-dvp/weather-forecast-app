@@ -53,44 +53,24 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-$primary-color: #22475a;
-$light-primary-color: #ffffff;
-$active-color: #6e4241;
-$focused-color: #b96246;
-$light-color: #eec583;
-$middle-color: #ef8d50;
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
 
 .teleport-modal-msg {
   z-index: 2;
   position: absolute;
   top: 0;
   left: calc(-120% - 5px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  @include display-flex (column, center);
   width: 120%;
   height: 70px;
   padding: 5px 40px 5px 5px;
-  // border: 3px solid $primary-color;
-  // border-radius: 6px;
   border-top-right-radius: 11px;
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
   background-color: $primary-color;
   color: $light-primary-color;
-
-  // &::before {
-  //   content: '';
-  //   position: absolute;
-  //   top: 0px;
-  //   right: 0px;
-  //   padding: 8px;
-  //   border-top: 3px solid red;
-  //   // border-bottom-left-radius: 100%;
-  //   // border-bottom-right-radius: 100%;
-  //   background-color: $primary-color;
-  // }
 
   &::after {
     content: '';
@@ -100,10 +80,6 @@ $middle-color: #ef8d50;
     padding: 8px;
     background-color: $primary-color;
     border-radius: 0px 3px;
-    // border-top: 3px solid red;
-    // border-right: 3px solid red;
-    // border-top-right-radius: 100%;
-
     transform-origin: top right;
     transform: rotate(45deg) translateX(17px) translateY(4px);
   }

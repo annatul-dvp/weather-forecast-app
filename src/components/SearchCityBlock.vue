@@ -168,17 +168,11 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss" >
-$primary-color: #22475a;
-$light-primary-color: #ffffff;
-$active-color: #6e4241;
-$focused-color: #b96246;
-$light-color: #eec583;
-$middle-color: #ef8d50;
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
 
 .search-form {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  @include display-flex (row, space-between);
 
   &__fieldset {
     position: relative;

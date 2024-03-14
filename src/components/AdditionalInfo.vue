@@ -73,13 +73,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-  $primary-color: #22475a;
-  $light-primary-color: #ffffff;
-  $active-color: #6e4241;
-  $focused-color: #b96246;
-  $light-color: #eec583;
-  $middle-color: #ef8d50;
-  $current-city-height: 350px;
+  @import '@/styles/variables.scss';
+  @import '@/styles/mixins.scss';
 
   %compact-item_bg {
     background-size: contain;
@@ -88,6 +83,9 @@ export default defineComponent({
   }
 
   .cities-weather {
+    @include display-flex (row, space-between, normal, wrap);
+    row-gap: 20px;
+
     &__compact-item:not(:nth-child(4n  + 1)) {
       margin-right: 4%;
     }
@@ -107,10 +105,7 @@ export default defineComponent({
   }
 
   .forecast-weather {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+    @include display-flex (row, space-evenly, normal, wrap);
     border-top: 2px solid;
 
     &__title {
@@ -118,6 +113,40 @@ export default defineComponent({
       width: 100%;
       font-size: 1.5rem;
       line-height: 1.5rem;
+    }
+  }
+
+  @media screen and (orientation: $orient-portrait){
+    .forecast-weather {
+      position: relative;
+      @include display-flex (column, space-between, normal, wrap);
+      // justify-content: space-between;
+    }
+
+    .cities-weather {
+      row-gap: 4%;
+      column-gap: 4%;
+      width: 100%;
+
+      &__compact-item:not(:nth-child(4n  + 1)) {
+        margin-right: 0;
+      }
+
+      &__compact-item {
+        height: 22%;
+        width: 48%;
+      }
+    }
+  }
+
+  @media screen and (orientation: $orient-portrait) and (max-width: 900px){
+    .cities-weather {
+      row-gap: 2%;
+
+      &__compact-item {
+        height: 23.5%;
+        padding: 8px 12px;
+      }
     }
   }
 </style>

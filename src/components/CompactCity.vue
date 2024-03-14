@@ -62,12 +62,11 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+  @import '@/styles/variables.scss';
+  @import '@/styles/mixins.scss';
   .compact-city {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
+    @include display-flex (column, space-between, flex-start);
 
     &__name {
       margin-top: 8%;
@@ -96,6 +95,19 @@ export default defineComponent({
       z-index: -1;
       width: 100%;
       opacity: .5;
+    }
+  }
+
+  @media screen and (orientation: $orient-portrait) and (max-width: 900px){
+    .compact-city {
+      &__name {
+        margin-top: 4%;
+        margin-bottom: 4%;
+      }
+
+      &__temp-feels-like {
+        margin-bottom: 4%;
+      }
     }
   }
 </style>

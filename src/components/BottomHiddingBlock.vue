@@ -53,12 +53,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-  $primary-color: #22475a;
-  $light-primary-color: #ffffff;
-  $active-color: #6e4241;
-  $focused-color: #b96246;
-  $light-color: #eec583;
-  $middle-color: #ef8d50;
+  @import '@/styles/variables.scss';
 
   .hidding-block {
     position: absolute;
@@ -66,10 +61,6 @@ export default defineComponent({
     left: 0;
     right: 0;
     bottom: 0;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    row-gap: 20px;
     padding-top: 50px;
     padding-bottom: 40px;
     height: 100%;
@@ -118,7 +109,38 @@ export default defineComponent({
   }
 
   .hidding-block_hidden {
-    // background-color: red;
     transform: translateY(100%);
+  }
+
+  @media screen and (orientation: $orient-portrait) and (max-width: 900px){
+    .hidding-block {
+      padding-top: 30px;
+      padding-bottom: 20px;
+
+      &__btn {
+        position:absolute;
+        top: 6px;
+        left: calc(50% - 14px);
+        right: calc(50% - 14px);
+        bottom: calc(100% - 6px - 16px);
+        width: 24px;
+      }
+    }
+  }
+
+  @media screen and (orientation: $orient-portrait) and (max-width: 520px){
+    .hidding-block {
+      padding-top: 25px;
+      padding-bottom: 25px;
+
+      &__btn {
+        position:absolute;
+        top: 6px;
+        left: calc(50% - 14px);
+        right: calc(50% - 14px);
+        bottom: calc(100% - 6px - 12px);
+        width: 20px;
+      }
+    }
   }
 </style>

@@ -4,22 +4,45 @@
     <input type="checkbox" class="input lang__checkbox lang__checkbox_eng" @click="setLanguage('en')">
     <span class="lang__custom-checkbox lang__custom-checkbox_left">
     </span>
-    <span class="lang__text">English</span>
+    <span class="lang__text">{{ languages.en }}</span>
   </label>
   <label class="lang" :class="langStatus.ru">
     <input type="checkbox" class="input lang__checkbox lang__checkbox_ru" @click="setLanguage('ru')">
     <span class="lang__custom-checkbox lang__custom-checkbox_right"></span>
-    <span class="lang__text">Русский</span>
+    <span class="lang__text">{{ languages.ru }}</span>
   </label>
 </div>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import { useStore } from 'vuex'
+import { useScreenOrientation } from '@vueuse/core'
 
 export default defineComponent({
   setup () {
+    const {
+      orientation
+    } = useScreenOrientation()
+
+    const languages = ref({
+      en: 'English',
+      ru: 'Русский'
+    })
+
+    function setLangStyle (en, ru) {
+      languages.value.en = en
+      languages.value.ru = ru
+    }
+
+    watch(() => orientation.value, (newOrintation) => {
+      if (newOrintation.includes('portrait')) {
+        setLangStyle('Eng', 'Рус')
+      } else {
+        setLangStyle('English', 'Русский')
+      }
+    }, { immediate: true })
+
     const $store = useStore()
 
     const langStatus = ref({
@@ -49,6 +72,8 @@ export default defineComponent({
     }
 
     return {
+      languages,
+
       langStatus,
       setLanguage
     }
@@ -57,10 +82,9 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-  $primary-color: #22475a;
-  $light-primary-color: #ffffff;
-  $active-color: #6e4241;
-  $focused-color: #b96246;
+  @import '@/styles/variables.scss';
+  @import '@/styles/mixins.scss';
+
   .switches {
     width: 10%;
   }
@@ -105,19 +129,7 @@ export default defineComponent({
     }
 
     &__text {
-      position: relative;
-
-      &::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: -2px;
-        width: 100%;
-        height: 2px;
-        border-bottom: 2px solid $light-primary-color;
-        opacity: 0;
-        transition: all .5s ease-in-out;
-      }
+      @include text-to-choose($light-primary-color);
     }
 
     &:hover {

@@ -38,28 +38,27 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-  $active-color: #6e4241;
-  $middle-color: #ef8d50;
+  @import '@/styles/variables.scss';
+  @import '@/styles/mixins.scss';
 
   .weather-for-day {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    @include display-flex (column, space-between, self-start);
     padding: 20px;
     border: 2px solid;
     border-radius: 10px;
     min-height: 80%;
 
     &__date {
-      text-align: center;
+      // text-align: center;
       margin-bottom: 5px;
+      width: 100%;
       font-size: 1.15rem;
     }
 
-    &__data {
-      text-align: left;
-    }
+    // &__data {
+    //   text-align: left;
+    // }
 
     &__picture {
       position: absolute;
@@ -76,9 +75,43 @@ export default defineComponent({
   }
 
   .astro-data {
-    // text-align: center;
-    // font-size: .8rem;
     color: $active-color;
     font-style: italic;
+  }
+
+  @media screen and (orientation: $orient-portrait){
+    .weather-for-day {
+      position: relative;
+      @include display-flex (row, space-between, normal, wrap);
+      // padding-top: 72px;
+      // height: 100px;
+      min-height: 27%;
+
+      &__data {
+        width: 50%;
+        margin-bottom: 5px;
+      }
+
+      &__picture {
+        top: 0;
+        right: 43%;
+        width: auto;
+        transform: scale(80%) translateX(100%);
+      }
+    }
+
+    .astro-data {
+      // width: 100%;
+      // text-align: left;
+
+      &:nth-of-type(1) {
+        padding-right: 15px;
+        text-align: right;
+      }
+      &:nth-of-type(2) {
+        padding-left: 15px;
+        text-align: left;
+      }
+    }
   }
 </style>
