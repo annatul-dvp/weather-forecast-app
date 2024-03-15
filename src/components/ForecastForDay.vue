@@ -50,15 +50,10 @@ export default defineComponent({
     min-height: 80%;
 
     &__date {
-      // text-align: center;
       margin-bottom: 5px;
       width: 100%;
       font-size: 1.15rem;
     }
-
-    // &__data {
-    //   text-align: left;
-    // }
 
     &__picture {
       position: absolute;
@@ -79,12 +74,53 @@ export default defineComponent({
     font-style: italic;
   }
 
+  @media screen and (max-width: 960px) {
+    .weather-for-day {
+      position: relative;
+      @include display-flex (row, space-between, normal, wrap);
+      padding: 5px 10px;
+      border: 1px solid;
+      min-height: auto;
+
+      &__date {
+        font-size: 1rem;
+      }
+
+      &__data {
+        width: 50%;
+        margin-bottom: 5px;
+        font-size: .9rem;
+      }
+
+      &__picture {
+        display: none;
+        // top: 0;
+        // right: 43%;
+        // width: auto;
+        // transform: scale(80%) translateX(100%);
+      }
+    }
+
+    .astro-data {
+      &:nth-of-type(1) {
+        padding-right: 15px;
+        text-align: right;
+      }
+      &:nth-of-type(2) {
+        padding-left: 15px;
+        text-align: left;
+      }
+    }
+  }
+
+  @media screen and (max-width: 620px) {
+
+  }
+
   @media screen and (orientation: $orient-portrait){
     .weather-for-day {
       position: relative;
       @include display-flex (row, space-between, normal, wrap);
-      // padding-top: 72px;
-      // height: 100px;
       min-height: 27%;
 
       &__data {
@@ -101,9 +137,6 @@ export default defineComponent({
     }
 
     .astro-data {
-      // width: 100%;
-      // text-align: left;
-
       &:nth-of-type(1) {
         padding-right: 15px;
         text-align: right;

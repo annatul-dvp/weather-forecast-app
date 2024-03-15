@@ -5,16 +5,48 @@ $focused-color: #b96246;
 $light-color: #eec583;
 $middle-color: #ef8d50;
 
-$current-city-height: 350px;
-$current-city-v-height: 300px;
-$current-city-middle-height: 450px;
-$current-city-big-height: 600px;
-$header-height: 80px;
-$footer-height: 50px;
-$header-big-height: 90px;
-$footer-big-height: 70px;
-$header-middle-height: 85px;
-$footer-middle-height: 60px;
+
+$header-height-m-size: 80px;
+$footer-height-m-size: 50px;
+$header-height-s-size: 60px;
+$footer-height-s-size: 45px;
+$header-height-xs-size: 45px;
+$footer-height-xs-size: 40px;
+$header-height-xxs-size: 32px;
+$footer-height-xxs-size: 25px;
+
+/*Current city block*/
+$current-city-height-xl-size: 600px; 
+$current-city-height-l-size: 450px; 
+$current-city-height-m-size: 350px;
+$current-city-height-s-size: 180px;
+$current-city-height-xs-size: 110px;
+$current-city-height-xxs-size: 80px;
+
+$additional-info-height-xl-size: 500px; 
+$additional-info-height-l-size: 450px; 
+$additional-info-height-m-size: 380px;
+$additional-info-height-s-size: 300px;
+$additional-info-height-xs-size: 150px;
+
+/*Hidding block*/
+
+$hb-padding-top-l-size: 50px;
+$hb-padding-bottop-l-size: 40px;
+$hb-padding-top-m-size: 35px;
+$hb-padding-bottop-m-size: 20px;
+$hb-padding-top-s-size: 25px;
+$hb-padding-bottop-s-size: 15px;
+$hb-padding-top-xs-size: 17px;
+$hb-padding-bottop-xs-size: 10px;
+$hb-column-gap-xl-size: 2%;
+$hb-column-gap-l-size: 1%;
+$hb-row-gap-l-size: 20px;
+$hb-row-gap-m-size: 10px;
+$hb-row-gap-s-size: 5px;
+
+
+
 
 $orient-landscape: landscape;
 $orient-portrait: portrait;

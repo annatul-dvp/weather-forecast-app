@@ -79,7 +79,6 @@ export default {
 
   %link {
     text-decoration: none;
-    margin-right: 5%;
   }
 
   .light-theme {
@@ -103,7 +102,7 @@ export default {
 
   .header {
     @include display-flex (row, space-between);
-    height: $header-height;
+    height: $header-height-m-size;
 
     &__nav {
       @include display-flex (row, left, center);
@@ -116,7 +115,7 @@ export default {
 
     &__lang-switch {
       margin-left: 10px;
-      width: 15%;
+      width: calc(15% - 10px);
       border-radius: 5px;
     }
   }
@@ -125,6 +124,7 @@ export default {
     &__link {
       @include text-to-choose($primary-color);
       @extend %link;
+      margin-right: 5%;
       font-size: 1rem;
       font-weight: bold;
       color: $primary-color;
@@ -220,7 +220,7 @@ export default {
     @include display-flex (row, center, center);
     padding-top: 10px;
     padding-bottom: 10px;
-    height: $footer-height;
+    height: $footer-height-s-size;
 
     &__text {
       margin-left: 25px;
@@ -237,64 +237,184 @@ export default {
     }
   }
 
-  @media screen and (orientation: $orient-portrait){
+  @media screen and (max-width: 1280px) {
     html {
-      font-size: 24px;
+      font-size: 16px;
     }
 
     .header {
-      height: $header-big-height;
+      height: $header-height-s-size;
 
       &__nav {
-        width: 30%;
+        width: 25%;
       }
 
       &__search {
-        width: 55%;
+        width: 50%;
+      }
+
+      &__lang-switch {
+        width: calc(25% - 10px);
       }
     }
 
-    .footer {
-      height: $footer-big-height;
-    }
-  }
-
-  @media screen and (orientation: $orient-portrait) and (max-width: 900px){
-    html {
-      font-size: 20px;
-    }
-    .header {
-      height: $header-middle-height
-    }
-
-    .footer {
-      height: $footer-middle-height;
-    }
-  }
-
-  @media screen and (orientation: $orient-portrait) and (max-width: 700px){
-    html {
-      font-size: 16px;
+    .nav {
+      &__link {
+        margin-right: 15%;
+      }
     }
 
     .container {
       padding-top: 10px;
       padding-bottom: 10px;
-      padding-left: 3%;
-      padding-right: 3%;
-    }
-
-    .header {
-      height: $header-height
+      padding-left: 2%;
+      padding-right: 2%;
     }
 
     .footer {
-      height: $footer-height;
+      height: $footer-height-s-size;
     }
   }
 
-  @media screen and (orientation: $orient-portrait) and (max-width: 520px){
+  @media screen and (max-width: 960px) {
+    html {
+      font-size: 14px;
+    }
 
+    .btn {
+      &__txt {
+        &::after{
+          display: none;
+        }
+      }
+    }
+
+    .container {
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+
+    .header {
+      height: $header-height-xs-size;
+
+      &__nav {
+        width: 25%;
+      }
+
+      &__search {
+        width: 60%;
+      }
+
+      &__lang-switch {
+        width: calc(15% - 10px);
+      }
+    }
+
+    .nav {
+      &__link {
+        margin-right: 10%;
+      }
+    }
+
+    .footer {
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
   }
+
+  @media screen and (max-width: 620px) {
+    html {
+      font-size: 10px;
+    }
+
+    .btn {
+      padding: 4px;
+    }
+
+    .header {
+      position: relative;
+      height: $header-height-xxs-size;
+
+      // &__nav {
+      //   width: 60%;
+      // }
+
+      // &__search {
+      //   position: absolute;
+      //   top: 100%;
+      //   width: 96%;
+      // }
+
+      // &__lang-switch {
+      //   width: calc(40% - 10px);
+      // }
+    }
+
+    .footer {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      height: $footer-height-xxs-size;
+    }
+  }
+
+  // @media screen and (orientation: $orient-portrait){
+  //   html {
+  //     font-size: 24px;
+  //   }
+
+  //   .header {
+  //     height: $header-big-height;
+
+  //     &__nav {
+  //       width: 30%;
+  //     }
+
+  //     &__search {
+  //       width: 55%;
+  //     }
+  //   }
+
+  //   .footer {
+  //     height: $footer-big-height;
+  //   }
+  // }
+
+  // @media screen and (orientation: $orient-portrait) and (max-width: 900px){
+  //   html {
+  //     font-size: 20px;
+  //   }
+  //   .header {
+  //     height: $header-middle-height
+  //   }
+
+  //   .footer {
+  //     height: $footer-middle-height;
+  //   }
+  // }
+
+  // @media screen and (orientation: $orient-portrait) and (max-width: 700px){
+  //   html {
+  //     font-size: 16px;
+  //   }
+
+  //   .container {
+  //     padding-top: 10px;
+  //     padding-bottom: 10px;
+  //     padding-left: 3%;
+  //     padding-right: 3%;
+  //   }
+
+  //   .header {
+  //     height: $header-height
+  //   }
+
+  //   .footer {
+  //     height: $footer-height;
+  //   }
+  // }
+
+  // @media screen and (orientation: $orient-portrait) and (max-width: 520px){
+
+  // }
 
 </style>

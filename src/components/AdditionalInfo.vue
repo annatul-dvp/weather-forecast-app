@@ -84,16 +84,13 @@ export default defineComponent({
 
   .cities-weather {
     @include display-flex (row, space-between, normal, wrap);
-    row-gap: 20px;
-
-    &__compact-item:not(:nth-child(4n  + 1)) {
-      margin-right: 4%;
-    }
+    row-gap: $hb-row-gap-l-size;
 
     &__compact-item {
       position: relative;
       padding: 10px 20px;
       border-radius: 5px;
+      height: calc((100% - $hb-row-gap-l-size) / 2);
       width: 22%;
       background-color: $light-primary-color;
       box-shadow: 2px 2px 5px rgba(0, 0, 0, .4),
@@ -116,37 +113,88 @@ export default defineComponent({
     }
   }
 
-  @media screen and (orientation: $orient-portrait){
+  @media screen and (max-width: 1824px) {
+    .cities-weather {
+      &__compact-item {
+        width: 24%;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1280px) {
+    .cities-weather {
+      @include display-flex (row, flex-start, normal, wrap);
+      column-gap: 1.25%;
+      row-gap: $hb-row-gap-m-size;
+        &__compact-item {
+          padding: 10px 15px;
+          height: calc((100% - $hb-row-gap-m-size*2) / 3);
+          width: 32.5%;
+        }
+    }
+  }
+
+  @media screen and (max-width: 960px) {
+    .cities-weather {
+      column-gap: $hb-column-gap-xl-size;
+        &__compact-item {
+          height: calc((100% - $hb-row-gap-m-size*3) / 4);
+          width: 49%;
+        }
+    }
+
     .forecast-weather {
-      position: relative;
-      @include display-flex (column, space-between, normal, wrap);
-      // justify-content: space-between;
-    }
+      row-gap: 4px;
+      border-top: 2px solid;
 
-    .cities-weather {
-      row-gap: 4%;
-      column-gap: 4%;
-      width: 100%;
-
-      &__compact-item:not(:nth-child(4n  + 1)) {
-        margin-right: 0;
-      }
-
-      &__compact-item {
-        height: 22%;
-        width: 48%;
+      &__title {
+        margin-bottom: 0;
+        font-size: 1.3rem;
+        line-height: 1.3rem;
       }
     }
   }
 
-  @media screen and (orientation: $orient-portrait) and (max-width: 900px){
+  @media screen and (max-width: 620px) {
     .cities-weather {
-      row-gap: 2%;
-
-      &__compact-item {
-        height: 23.5%;
-        padding: 8px 12px;
-      }
+      row-gap: $hb-row-gap-s-size;
+        &__compact-item {
+          height: calc((100% - $hb-row-gap-s-size*3) / 4);
+        }
     }
   }
+
+  // @media screen and (orientation: $orient-portrait){
+  //   .forecast-weather {
+  //     position: relative;
+  //     @include display-flex (column, space-between, normal, wrap);
+  //     // justify-content: space-between;
+  //   }
+
+  //   .cities-weather {
+  //     row-gap: 4%;
+  //     column-gap: 4%;
+  //     width: 100%;
+
+  //     &__compact-item:not(:nth-child(4n  + 1)) {
+  //       margin-right: 0;
+  //     }
+
+  //     &__compact-item {
+  //       height: 22%;
+  //       width: 48%;
+  //     }
+  //   }
+  // }
+
+  // @media screen and (orientation: $orient-portrait) and (max-width: 900px){
+  //   .cities-weather {
+  //     row-gap: 2%;
+
+  //     &__compact-item {
+  //       height: 23.5%;
+  //       padding: 8px 12px;
+  //     }
+  //   }
+  // }
 </style>

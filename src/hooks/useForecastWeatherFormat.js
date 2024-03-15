@@ -13,11 +13,11 @@ export default function undateForecastWeatherData (lang, listOfDays) {
       day: {
         ...dayWeather.day,
         avgtemp_c_txt: numberFormat(lang, 'celsius', dayWeather.day.avgtemp_c),
-        avgtemp_f_txt: numberFormat(lang, 'celsius', dayWeather.day.avgtemp_f),
+        avgtemp_f_txt: numberFormat(lang, 'fahrenheit', dayWeather.day.avgtemp_f),
         maxtemp_c_txt: numberFormat(lang, 'celsius', dayWeather.day.maxtemp_c),
-        maxtemp_f_txt: numberFormat(lang, 'celsius', dayWeather.day.maxtemp_f),
+        maxtemp_f_txt: numberFormat(lang, 'fahrenheit', dayWeather.day.maxtemp_f),
         mintemp_c_txt: numberFormat(lang, 'celsius', dayWeather.day.mintemp_c),
-        mintemp_f_txt: numberFormat(lang, 'celsius', dayWeather.day.mintemp_f),
+        mintemp_f_txt: numberFormat(lang, 'fahrenheit', dayWeather.day.mintemp_f),
         totalprecip_mm_txt: numberFormat(lang, 'milliliter', dayWeather.day.totalprecip_mm),
         totalprecip_in_txt: numberFormat(lang, 'inch', dayWeather.day.totalprecip_in)
       }

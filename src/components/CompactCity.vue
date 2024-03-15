@@ -9,8 +9,8 @@
   </div>
   <div v-else class="compact-city">
     <h4 class="h4 compact-city__name">{{ theName }}</h4>
-    <div class="compact-city__temp">{{ websiteText.tempTxt }}{{ weatherData.temp_c_txt }}</div>
-    <div class="compact-city__temp-feels-like">{{ websiteText.feelslikeTxt }}{{ weatherData.feelslike_c_txt }}</div>
+    <div class="compact-city__temp">{{ websiteText.tempTxt }}{{ weatherData.temp_c_txt }} / {{ weatherData.temp_f_txt }}</div>
+    <div class="compact-city__temp-feels-like">{{ websiteText.feelslikeTxt }}{{ weatherData.feelslike_c_txt }} / {{ weatherData.feelslike_f_txt }}</div>
     <picture class="compact-city__picture">
       <source :srcset=weatherData.condition.icon />
       <img class="compact-city__img" :src=weatherData.condition.icon :alt=weatherData.condition.text />
@@ -69,7 +69,7 @@ export default defineComponent({
     @include display-flex (column, space-between, flex-start);
 
     &__name {
-      margin-top: 8%;
+      margin-top: 5%;
       margin-bottom: 15px;
       font-size: 1.5rem;
     }
@@ -80,7 +80,7 @@ export default defineComponent({
     }
 
     &__temp-feels-like {
-      margin-bottom: 8%;
+      margin-bottom: 5%;
     }
 
     &__picture {
@@ -98,16 +98,57 @@ export default defineComponent({
     }
   }
 
-  @media screen and (orientation: $orient-portrait) and (max-width: 900px){
+  @media screen and (max-width: 1280px) {
     .compact-city {
       &__name {
-        margin-top: 4%;
-        margin-bottom: 4%;
+        margin-top: 0;
+        margin-bottom: 5px;
+        font-size: 1.3rem;
       }
 
       &__temp-feels-like {
-        margin-bottom: 4%;
+        margin-bottom: 0;
+      }
+
+      &__picture {
+        width: 18%;
       }
     }
   }
+
+  @media screen and (max-width: 960px) {
+    .compact-city {
+      &__name {
+        margin-top: 0;
+        margin-bottom: 1%;
+        // font-size: 1.5rem;
+      }
+
+      &__temp,
+      &__temp-feels-like {
+        font-size: .9rem;
+      }
+    }
+  }
+
+  @media screen and (max-width: 620px) {
+    .compact-city {
+      &__name {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  // @media screen and (orientation: $orient-portrait) and (max-width: 900px){
+  //   .compact-city {
+  //     &__name {
+  //       margin-top: 4%;
+  //       margin-bottom: 4%;
+  //     }
+
+  //     &__temp-feels-like {
+  //       margin-bottom: 4%;
+  //     }
+  //   }
+  // }
 </style>

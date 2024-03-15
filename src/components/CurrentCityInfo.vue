@@ -109,6 +109,82 @@ export default defineComponent({
     }
   }
 
+  @media screen and (max-width: 1280px) {
+    .detailed-weather {
+      &__city-name,
+      &__current-time{
+        padding-left: 3%;
+      }
+
+      &__city-name {
+        font-size: 3rem;
+      }
+
+      &__current-time {
+        font-size: .9rem;
+      }
+
+      &__info {
+        margin-bottom: 6px;
+      }
+
+      &__picture {
+        top: calc($current-city-height-s-size / 4);
+        left: 28%;
+        width: calc(30px + 100%*0.05);
+        height: 100%;
+      }
+
+    }
+  }
+
+  @media screen and (max-width: 960px) {
+    .detailed-weather {
+      // &__city-name,
+      // &__current-time {
+      //   width: 50%;
+      // }
+
+      &__city-name {
+        font-size: 2.5rem;
+      }
+
+      &__current-time {
+        font-size: .8rem;
+      }
+
+      &__info {
+        margin-bottom: 1px;
+        // width: 50%;
+        font-size: 1rem;
+      }
+
+      &__picture {
+        display: none;
+        // top: calc($current-city-height-xxs-size / 4);
+        // left: 28%;
+        // width: calc(30px + 100%*0.05);
+        // height: 100%;
+      }
+
+    }
+  }
+
+  @media screen and (max-width: 620px) {
+    .detailed-weather {
+      &__info {
+        margin-bottom: 2px;
+      }
+
+      &__picture {
+        top: calc($current-city-height-xxs-size / 4);
+        left: 25%;
+        width: calc(10px + 100%*0.05);
+      }
+
+    }
+  }
+
   @media screen and (orientation: $orient-portrait){
     .detailed-weather {
       @include display-flex (row, space-between, normal, wrap);
@@ -151,44 +227,44 @@ export default defineComponent({
     }
   }
 
-  @media screen and (orientation: $orient-portrait) and (max-width: 900px){
-    .detailed-weather {
-      &__city-name {
-        height: 22%;
-      }
+  // @media screen and (orientation: $orient-portrait) and (max-width: 900px){
+  //   .detailed-weather {
+  //     &__city-name {
+  //       height: 22%;
+  //     }
 
-      &__current-time {
-        height: 18%;
-      }
+  //     &__current-time {
+  //       height: 18%;
+  //     }
 
-      &__info {
-        margin-bottom: 5px;
+  //     &__info {
+  //       margin-bottom: 5px;
 
-        &:nth-of-type(3) {
-          margin-top: 5px;
-        }
-      }
+  //       &:nth-of-type(3) {
+  //         margin-top: 5px;
+  //       }
+  //     }
 
-      &__picture {
-        transform: translateX(-50%) translateY(-320%);
-      }
-    }
-  }
+  //     &__picture {
+  //       transform: translateX(-50%) translateY(-320%);
+  //     }
+  //   }
+  // }
 
-  @media screen and (orientation: $orient-portrait) and (max-width: 700px){
-    .detailed-weather {
-      &__city-name {
-        font-size: 3.5rem;
-        border-top: none;
-      }
+  // @media screen and (orientation: $orient-portrait) and (max-width: 700px){
+  //   .detailed-weather {
+  //     &__city-name {
+  //       font-size: 3.5rem;
+  //       border-top: none;
+  //     }
 
-      &__current-time {
-        border-bottom: none;
-      }
+  //     &__current-time {
+  //       border-bottom: none;
+  //     }
 
-      &__picture {
-        transform: translateX(-50%) translateY(-250%);
-      }
-    }
-  }
+  //     &__picture {
+  //       transform: translateX(-50%) translateY(-250%);
+  //     }
+  //   }
+  // }
 </style>

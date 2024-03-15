@@ -61,8 +61,8 @@ export default defineComponent({
     left: 0;
     right: 0;
     bottom: 0;
-    padding-top: 50px;
-    padding-bottom: 40px;
+    padding-top: $hb-padding-top-l-size;
+    padding-bottom: $hb-padding-bottop-l-size;
     height: 100%;
     transition: all 1s ease-in-out;
 
@@ -98,7 +98,6 @@ export default defineComponent({
       }
 
       &:active {
-        // border: 1px solid $light-primary-color;
         transform: scale(1.0);
 
         &::before {
@@ -112,35 +111,80 @@ export default defineComponent({
     transform: translateY(100%);
   }
 
-  @media screen and (orientation: $orient-portrait) and (max-width: 900px){
-    .hidding-block {
-      padding-top: 30px;
-      padding-bottom: 20px;
+  @media screen and (max-width: 1280px) {
+      .hidding-block {
+        padding-top: $hb-padding-top-m-size;
+        padding-bottom: $hb-padding-bottop-m-size;
 
-      &__btn {
-        position:absolute;
-        top: 6px;
-        left: calc(50% - 14px);
-        right: calc(50% - 14px);
-        bottom: calc(100% - 6px - 16px);
-        width: 24px;
+        &__btn {
+          top: 8px;
+          left: calc(50% - 14px);
+          right: calc(50% - 14px);
+          bottom: calc(100% - 8px - 16px);
+          width: 24px;
+        }
       }
-    }
   }
 
-  @media screen and (orientation: $orient-portrait) and (max-width: 520px){
-    .hidding-block {
-      padding-top: 25px;
-      padding-bottom: 25px;
+  @media screen and (max-width: 960px) {
+      .hidding-block {
+        padding-top: $hb-padding-top-s-size;
+        padding-bottom: $hb-padding-bottop-s-size;
 
-      &__btn {
-        position:absolute;
-        top: 6px;
-        left: calc(50% - 14px);
-        right: calc(50% - 14px);
-        bottom: calc(100% - 6px - 12px);
-        width: 20px;
+        &__btn {
+          top: 6px;
+          left: calc(50% - 14px);
+          right: calc(50% - 14px);
+          bottom: calc(100% - 6px - 12px);
+          width: 20px;
+        }
       }
-    }
   }
+
+  @media screen and (max-width: 620px) {
+      .hidding-block {
+        padding-top: $hb-padding-top-xs-size;
+        padding-bottom: $hb-padding-bottop-xs-size;
+
+        &__btn {
+          top: 5px;
+          left: calc(50% - 14px);
+          right: calc(50% - 14px);
+          bottom: calc(100% - 5px - 8px);
+          width: 16px;
+        }
+      }
+  }
+
+  // @media screen and (orientation: $orient-portrait) and (max-width: 900px){
+  //   .hidding-block {
+  //     padding-top: 30px;
+  //     padding-bottom: 20px;
+
+  //     &__btn {
+  //       position:absolute;
+  //       top: 6px;
+  //       left: calc(50% - 14px);
+  //       right: calc(50% - 14px);
+  //       bottom: calc(100% - 6px - 16px);
+  //       width: 24px;
+  //     }
+  //   }
+  // }
+
+  // @media screen and (orientation: $orient-portrait) and (max-width: 520px){
+  //   .hidding-block {
+  //     padding-top: 25px;
+  //     padding-bottom: 25px;
+
+  //     &__btn {
+  //       position:absolute;
+  //       top: 6px;
+  //       left: calc(50% - 14px);
+  //       right: calc(50% - 14px);
+  //       bottom: calc(100% - 6px - 12px);
+  //       width: 20px;
+  //     }
+  //   }
+  // }
 </style>
