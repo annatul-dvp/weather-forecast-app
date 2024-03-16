@@ -127,13 +127,6 @@ export default defineComponent({
             $store.commit('setDataFailed', true)
             console.log(error)
           })
-        // $store.commit('setCityNameTranslation',
-        //   await useCityNameTranslation(
-        //     $store.state.currentWeatherData.country,
-        //     $store.state.currentWeatherData.region,
-        //     $store.state.currentWeatherData.city
-        //   )
-        // )
       }
     }
 

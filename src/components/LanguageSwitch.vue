@@ -92,7 +92,6 @@ export default defineComponent({
     cursor: pointer;
     display: inline-block;
     position: relative;
-    // padding-top: 0.5rem;
     height: 100%;
     width: 50%;
     font-size: .95rem;
@@ -150,30 +149,19 @@ export default defineComponent({
     }
   }
 
-  @media screen and (max-width: 960px) {
+  @media screen and (orientation: $orient-landscape) and (max-width: 960px) {
     .lang {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding-top: 0;
-      height: 50%;
-      width: 100%;
-
-      &__custom-checkbox_left {
-        // border-top-left-radius: 6px;
-        border-bottom-left-radius: 0;
-        border-top-right-radius: 6px;
-      }
-
-      &__custom-checkbox_right {
-        border-bottom-left-radius: 6px;
-        border-top-right-radius: 0;
-        // border-bottom-right-radius: 6px;
-      }
-
       &__text {
-        top: auto;
-        transform: translateY(0);
+        &::after{
+          display: none;
+        }
+      }
+    }
+  }
+
+  @media screen and (orientation: $orient-portrait) and (max-width: 960px) {
+    .lang {
+      &__text {
         &::after{
           display: none;
         }

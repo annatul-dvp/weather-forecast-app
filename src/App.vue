@@ -1,8 +1,4 @@
 <template>
-  <!-- <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav> -->
   <div class="container header">
     <nav class="nav header__nav">
       <router-link class="nav__link" to="/">{{ websiteText.mainLinkTxt }}</router-link>
@@ -22,11 +18,6 @@
 </template>
 
 <script>
-// import Vue from 'vue'
-// import VueNumberFormat from '@coders-tm/vue-number-format'
-
-// // register directive v-number and component <number>
-// Vue.use(VueNumberFormat, { precision: 4 })
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 import SearchCityBlock from '@/components/SearchCityBlock.vue'
@@ -178,7 +169,6 @@ export default {
     &__txt {
       @include text-to-choose($light-primary-color);
     }
-
   }
 
   .btn_dark-theme {
@@ -302,11 +292,11 @@ export default {
       }
 
       &__search {
-        width: 60%;
+        width: 50%;
       }
 
       &__lang-switch {
-        width: calc(15% - 10px);
+        width: calc(25% - 10px);
       }
     }
 
@@ -334,20 +324,6 @@ export default {
     .header {
       position: relative;
       height: $header-height-xxs-size;
-
-      // &__nav {
-      //   width: 60%;
-      // }
-
-      // &__search {
-      //   position: absolute;
-      //   top: 100%;
-      //   width: 96%;
-      // }
-
-      // &__lang-switch {
-      //   width: calc(40% - 10px);
-      // }
     }
 
     .footer {
@@ -357,64 +333,95 @@ export default {
     }
   }
 
-  // @media screen and (orientation: $orient-portrait){
-  //   html {
-  //     font-size: 24px;
-  //   }
+  @media screen and (orientation: $orient-portrait) {
+    html {
+      font-size: 24px;
+    }
 
-  //   .header {
-  //     height: $header-big-height;
+    .header {
+      height: $header-height-l-size;
+    }
 
-  //     &__nav {
-  //       width: 30%;
-  //     }
+    .footer {
+      height: $footer-height-l-size;
+    }
+  }
 
-  //     &__search {
-  //       width: 55%;
-  //     }
-  //   }
+  @media screen and (orientation: $orient-portrait) and (max-width: 1280px) {
+    html {
+      font-size: 20px;
+    }
 
-  //   .footer {
-  //     height: $footer-big-height;
-  //   }
-  // }
+    .header {
+      height: $header-height-m-size;
+    }
 
-  // @media screen and (orientation: $orient-portrait) and (max-width: 900px){
-  //   html {
-  //     font-size: 20px;
-  //   }
-  //   .header {
-  //     height: $header-middle-height
-  //   }
+    .footer {
+      height: $footer-height-m-size;
+    }
+  }
 
-  //   .footer {
-  //     height: $footer-middle-height;
-  //   }
-  // }
+  @media screen and (orientation: $orient-portrait) and (max-width: 960px) {
+    .container {
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
 
-  // @media screen and (orientation: $orient-portrait) and (max-width: 700px){
-  //   html {
-  //     font-size: 16px;
-  //   }
+    .header {
+      position: relative;
+      height: $header-height-m-size;
 
-  //   .container {
-  //     padding-top: 10px;
-  //     padding-bottom: 10px;
-  //     padding-left: 3%;
-  //     padding-right: 3%;
-  //   }
+      &__nav {
+        width: 60%;
+      }
 
-  //   .header {
-  //     height: $header-height
-  //   }
+      &__search {
+        position: absolute;
+        top: 100%;
+        width: 96%;
+        height: calc(100% - 24px);
+      }
 
-  //   .footer {
-  //     height: $footer-height;
-  //   }
-  // }
+      &__lang-switch {
+        width: calc(40% - 10px);
+      }
+    }
 
-  // @media screen and (orientation: $orient-portrait) and (max-width: 520px){
+    .footer {
+      height: $footer-height-m-size;
+    }
+  }
 
-  // }
+  @media screen and (orientation: $orient-portrait) and (max-width: 960px) {
+    html {
+      font-size: 15px;
+    }
 
+    .container {
+      padding: 10px 4% 10px 3%;
+    }
+
+    .header {
+      height: $header-height-s-size;
+
+      &__search {
+        height: calc(100% - 20px);
+        width: 93%;
+      }
+    }
+
+    .footer {
+      @include display-flex (column, center, center);
+      height: $footer-height-l-size;
+
+      &__text {
+        margin-left: 0;
+      }
+
+      &__link {
+        height: 40%;
+        margin-bottom: 10px;
+      }
+    }
+  }
 </style>

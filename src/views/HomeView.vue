@@ -29,14 +29,15 @@ export default defineComponent({
   @import '@/styles/variables.scss';
 
   .current-city {
-    height: $current-city-height-m-size;
+    height: $current-city-height-l-size;
   }
 
   .additional-info {
     position: relative;
     width: 100%;
-    /* window height - current cyty's height - header height - footer height */
-    height: calc(100vh - $current-city-height-m-size - $header-height-m-size - $footer-height-m-size);
+    /* window height - current city's height - header height - footer height */
+    height: calc(100vh - $current-city-height-l-size - $header-height-m-size - $footer-height-m-size);
+    height: calc(100svh - $current-city-height-l-size - $header-height-m-size - $footer-height-m-size);
     overflow: hidden;
   }
 
@@ -46,8 +47,9 @@ export default defineComponent({
     }
 
     .additional-info {
-      /* window height - current cyty's height - header height - footer height */
+      /* window height - current city's height - header height - footer height */
       height: calc(100vh - $current-city-height-s-size - $header-height-s-size - $footer-height-s-size);
+      height: calc(100svh - $current-city-height-s-size - $header-height-s-size - $footer-height-s-size);
     }
   }
 
@@ -57,54 +59,71 @@ export default defineComponent({
     }
 
     .additional-info {
-      /* window height - current cyty's height - header height - footer height */
+      /* standart window height for mobile devices */
       height: $additional-info-height-m-size;
     }
   }
 
   @media screen and (max-width: 620px) {
     .current-city {
-      // margin-top: calc($header-height-xxs-size - 10px);
       height: $current-city-height-xxs-size;
     }
 
     .additional-info {
-      /* window height - current cyty's height - header height - footer height */
+      /* standart window height for mobile devices */
       height: $additional-info-height-s-size;
     }
   }
 
-  // @media screen and (orientation: $orient-portrait){
-  //   .current-city {
-  //     height: $current-city-height-xl-size;
-  //   }
+  @media screen and (orientation: $orient-portrait){
+    .current-city {
+      min-height: $current-city-height-xxl-size;
+      max-height: 60%;
+    }
 
-  //   .additional-info {
-  //     /* window height - current cyty's height - header height - footer height */
-  //     height: calc(100vh - $current-city-height-xl-size - $header-big-height - $footer-big-height);
-  //   }
-  // }
+    .additional-info {
+      /* window height - current city's height - header height - footer height */
+      height: calc(100vh - $current-city-height-xxl-size - $header-height-l-size - $footer-height-l-size);
+      height: calc(100svh - $current-city-height-xxl-size - $header-height-l-size - $footer-height-l-size);
+    }
+  }
 
-  // @media screen and (orientation: $orient-portrait) and (max-width: 900px){
-  //   .current-city {
-  //     height: $current-city-middle-height;
-  //   }
+  @media screen and (orientation: $orient-portrait) and (max-width: 1280px){
+    .current-city {
+      height: $current-city-height-xl-size;
+      min-height: min-content;
+      max-height: none;
+    }
 
-  //   .additional-info {
-  //     /* window height - current cyty's height - header height - footer height */
-  //     height: calc(100vh - $current-city-middle-height - $header-middle-height - $footer-middle-height);
-  //   }
-  // }
+    .additional-info {
+      /* window height - current city's height - header height - footer height */
+      height: calc(100vh - $current-city-height-xl-size - $header-height-m-size - $footer-height-m-size);
+      height: calc(100svh - $current-city-height-xl-size - $header-height-m-size - $footer-height-m-size);
+    }
+  }
 
-  // @media screen and (orientation: $orient-portrait) and (max-width: 700px){
-  //   .current-city {
-  //     height: $current-city-v-height;
-  //   }
+  @media screen and (orientation: $orient-portrait) and (max-width: 960px){
+    .current-city {
+      margin-top: calc($header-height-m-size - 12px);
+      height: $current-city-height-l-size;
+    }
 
-  //   .additional-info {
-  //     /* window height - current cyty's height - header height - footer height */
-  //     height: calc(100vh - $current-city-v-height - $header-height - $footer-height);
-  //   }
-  // }
+    .additional-info {
+      /* window height - current city's height - header height - footer height */
+      height: calc(100vh - $current-city-height-l-size - $header-height-m-size * 2 - $footer-height-m-size);
+      height: calc(100svh - $current-city-height-l-size - $header-height-m-size * 2 - $footer-height-m-size);
+    }
+  }
 
+  @media screen and (orientation: $orient-portrait) and (max-width: 640px){
+    .current-city {
+      margin-top: calc($header-height-s-size - 10px);
+      height: $current-city-height-m-size;
+    }
+
+    .additional-info {
+      /* standart window height for mobile devices */
+      height: $additional-info-height-l-size;
+    }
+  }
 </style>

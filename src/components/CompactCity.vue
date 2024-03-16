@@ -66,21 +66,18 @@ export default defineComponent({
   @import '@/styles/mixins.scss';
   .compact-city {
     position: relative;
-    @include display-flex (column, space-between, flex-start);
+    @include display-flex (column, center, flex-start);
 
     &__name {
       margin-top: 5%;
-      margin-bottom: 15px;
+      margin-bottom: 10%;
       font-size: 1.5rem;
     }
 
     &__temp,
     &__temp-feels-like {
-      font-size: 1rem;
-    }
-
-    &__temp-feels-like {
       margin-bottom: 5%;
+      font-size: 1rem;
     }
 
     &__picture {
@@ -106,8 +103,9 @@ export default defineComponent({
         font-size: 1.3rem;
       }
 
+      &__temp,
       &__temp-feels-like {
-        margin-bottom: 0;
+        margin-bottom: 2px;
       }
 
       &__picture {
@@ -121,12 +119,15 @@ export default defineComponent({
       &__name {
         margin-top: 0;
         margin-bottom: 1%;
-        // font-size: 1.5rem;
       }
 
       &__temp,
       &__temp-feels-like {
         font-size: .9rem;
+      }
+
+      &__picture {
+        width: 10%;
       }
     }
   }
@@ -139,16 +140,64 @@ export default defineComponent({
     }
   }
 
-  // @media screen and (orientation: $orient-portrait) and (max-width: 900px){
-  //   .compact-city {
-  //     &__name {
-  //       margin-top: 4%;
-  //       margin-bottom: 4%;
-  //     }
+  @media screen and (orientation: $orient-portrait) {
+    .compact-city {
+      @include display-flex (column, center, normal, wrap);
 
-  //     &__temp-feels-like {
-  //       margin-bottom: 4%;
-  //     }
-  //   }
-  // }
+      &__name,
+      &__temp,
+      &__temp-feels-like {
+        text-align: left;
+        width: 100%;
+      }
+
+      &__name {
+        margin-bottom: 4%;
+      }
+
+      &__temp,
+      &__temp-feels-like {
+        margin-bottom: 2%;
+      }
+
+      &__picture {
+        width: 20%;
+      }
+    }
+  }
+
+  @media screen and (orientation: $orient-portrait) and (max-width: 1280px) {
+    .compact-city {
+      &__picture {
+        width: 20%;
+      }
+    }
+  }
+
+  @media screen and (orientation: $orient-portrait) and (max-width: 640px) {
+    .compact-city {
+      @include display-flex (row, space-evenly, flex-start, wrap);
+      &__name,
+      &__temp,
+      &__temp-feels-like {
+        text-align: center;
+      }
+      &__name {
+        margin-top: 0;
+        margin-bottom: 0;
+        width: 100%;
+        font-size: 1.5rem;
+      }
+
+      &__temp,
+      &__temp-feels-like {
+        margin-bottom: 0;
+        width: 100%;
+      }
+
+      &__picture {
+        display: none;
+      }
+    }
+  }
 </style>

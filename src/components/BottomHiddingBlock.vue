@@ -112,18 +112,18 @@ export default defineComponent({
   }
 
   @media screen and (max-width: 1280px) {
-      .hidding-block {
-        padding-top: $hb-padding-top-m-size;
-        padding-bottom: $hb-padding-bottop-m-size;
+    .hidding-block {
+      padding-top: $hb-padding-top-m-size;
+      padding-bottom: $hb-padding-bottop-m-size;
 
-        &__btn {
-          top: 8px;
-          left: calc(50% - 14px);
-          right: calc(50% - 14px);
-          bottom: calc(100% - 8px - 16px);
-          width: 24px;
-        }
+      &__btn {
+        top: 8px;
+        left: calc(50% - 14px);
+        right: calc(50% - 14px);
+        bottom: calc(100% - 8px - 16px);
+        width: 24px;
       }
+    }
   }
 
   @media screen and (max-width: 960px) {
@@ -156,35 +156,33 @@ export default defineComponent({
       }
   }
 
-  // @media screen and (orientation: $orient-portrait) and (max-width: 900px){
-  //   .hidding-block {
-  //     padding-top: 30px;
-  //     padding-bottom: 20px;
+  @media screen and (orientation: $orient-portrait) and (max-width: 960px) {
+    .hidding-block {
+      padding-top: $hb-padding-top-l-size;
+      padding-bottom: $hb-padding-bottop-l-size;
 
-  //     &__btn {
-  //       position:absolute;
-  //       top: 6px;
-  //       left: calc(50% - 14px);
-  //       right: calc(50% - 14px);
-  //       bottom: calc(100% - 6px - 16px);
-  //       width: 24px;
-  //     }
-  //   }
-  // }
+      &__btn {
+        top: 10px;
+        left: calc(50% - 14px);
+        right: calc(50% - 14px);
+        bottom: calc(100% - 10px - 20px);
+        width: 28px;
+      }
+    }
+  }
 
-  // @media screen and (orientation: $orient-portrait) and (max-width: 520px){
-  //   .hidding-block {
-  //     padding-top: 25px;
-  //     padding-bottom: 25px;
+  @media screen and (orientation: $orient-portrait) and (max-width: 640px) {
+    .hidding-block {
+      padding-top: $hb-padding-top-m-size;
+      padding-bottom: $hb-padding-bottop-m-size;
 
-  //     &__btn {
-  //       position:absolute;
-  //       top: 6px;
-  //       left: calc(50% - 14px);
-  //       right: calc(50% - 14px);
-  //       bottom: calc(100% - 6px - 12px);
-  //       width: 20px;
-  //     }
-  //   }
-  // }
+      &__btn {
+        top: 10px;
+        left: calc(50% - 14px);
+        right: calc(50% - 14px);
+        bottom: calc(100% - 10px - 12px);
+        width: 20px;
+      }
+    }
+  }
 </style>

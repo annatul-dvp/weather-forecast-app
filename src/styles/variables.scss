@@ -5,7 +5,8 @@ $focused-color: #b96246;
 $light-color: #eec583;
 $middle-color: #ef8d50;
 
-
+$header-height-l-size: 100px;
+$footer-height-l-size: 80px;
 $header-height-m-size: 80px;
 $footer-height-m-size: 50px;
 $header-height-s-size: 60px;
@@ -16,15 +17,16 @@ $header-height-xxs-size: 32px;
 $footer-height-xxs-size: 25px;
 
 /*Current city block*/
-$current-city-height-xl-size: 600px; 
-$current-city-height-l-size: 450px; 
-$current-city-height-m-size: 350px;
+$current-city-height-xxl-size: 800px; 
+$current-city-height-xl-size: 500px; 
+$current-city-height-l-size: 350px; 
+$current-city-height-m-size: 250px;
 $current-city-height-s-size: 180px;
 $current-city-height-xs-size: 110px;
 $current-city-height-xxs-size: 80px;
 
-$additional-info-height-xl-size: 500px; 
-$additional-info-height-l-size: 450px; 
+// $additional-info-height-xl-size: 500px; 
+$additional-info-height-l-size: 800px; 
 $additional-info-height-m-size: 380px;
 $additional-info-height-s-size: 300px;
 $additional-info-height-xs-size: 150px;

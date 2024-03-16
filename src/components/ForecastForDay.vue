@@ -94,10 +94,6 @@ export default defineComponent({
 
       &__picture {
         display: none;
-        // top: 0;
-        // right: 43%;
-        // width: auto;
-        // transform: scale(80%) translateX(100%);
       }
     }
 
@@ -113,11 +109,7 @@ export default defineComponent({
     }
   }
 
-  @media screen and (max-width: 620px) {
-
-  }
-
-  @media screen and (orientation: $orient-portrait){
+  @media screen and (orientation: $orient-portrait) {
     .weather-for-day {
       position: relative;
       @include display-flex (row, space-between, normal, wrap);
@@ -144,6 +136,20 @@ export default defineComponent({
       &:nth-of-type(2) {
         padding-left: 15px;
         text-align: left;
+      }
+    }
+  }
+
+  @media screen and (orientation: $orient-portrait) and (max-width: 620px) {
+    .weather-for-day {
+      padding: 15px 10px 5px 10px;
+
+      &__date {
+        font-size: 1.3rem;
+      }
+
+      &__data:not(.astro-data) {
+        width: 100%;
       }
     }
   }
