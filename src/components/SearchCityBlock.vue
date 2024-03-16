@@ -21,7 +21,7 @@
     <ModalWindow v-model:open="errorTheCityIsntFound.status">
       {{ errorTheCityIsntFound.text }}
     </ModalWindow>
-    <ModalMessage v-model:shown="isTypedTextErrorShown">
+    <ModalMessage v-model:shown="isTypedTextErrorShown" v-model:style="errorSearchMessageStyle">
       {{ isTypedTextErrorShown }}
     </ModalMessage>
   </form>
@@ -30,7 +30,7 @@
 <script>
 import axios from 'axios'
 import { API_BASE_URL, theKey } from '@/config'
-import { defineComponent, ref, computed, watch } from 'vue'
+import { defineComponent, ref, computed, watch, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import ModalWindow from '@/components/ModalWindow.vue'
 import ModalMessage from './ModalMessage.vue'
@@ -47,6 +47,23 @@ export default defineComponent({
     const $store = useStore()
     const lang = computed(() => $store.getters.getCurrentLang)
     const websiteText = computed(() => $store.getters.getWebsiteText)
+    // const windowWidth = ref(window.innerWidth)
+    const errorSearchMessageStyle = ref('teleport-modal-msg_big-screen')
+
+    function setErrorSearchMessageStyle (winWidth) {
+      if (winWidth <= 1280) {
+        return 'teleport-modal-msg_small-screen'
+      } else {
+        return 'teleport-modal-msg_big-screen'
+      }
+    }
+
+    // controlling changing window with, it will be needed to show ModalMessage of Error correctly
+    onMounted(() => {
+      // console.log(windowWidth.value)
+      errorSearchMessageStyle.value = setErrorSearchMessageStyle(window.innerWidth)
+      console.log(errorSearchMessageStyle.value)
+    })
 
     const errorTheCityIsntFound = ref({ // error info, it will open ModalWindow if the city hasn't been found
       status: false,
@@ -60,6 +77,7 @@ export default defineComponent({
       isTypedTextErrorShown.value = isShown
     }
 
+    // checking is typing text using correct language
     watch(() => searchedCity.value, (text) => {
       if (lang.value === 'ru' & !isLanguageCorrect(lang.value, text) & text !== '') {
         searchedCity.value = searchedCity.value.substring(0, searchedCity.value.length - 1)
@@ -98,7 +116,7 @@ export default defineComponent({
     // datalist status variable
     const datalistStatus = ref('custom-datalist_hidden')
 
-    // Settin datalist status, does it need to be hidded or showed
+    // Setting datalist status, does it need to be hidded or showed
     function setDatalistStatus (status) {
       // Checking is there something to show or the list is empty
       if (foundCities.value.length !== 0) {
@@ -140,6 +158,7 @@ export default defineComponent({
     return {
       lang,
       websiteText,
+      errorSearchMessageStyle,
 
       searchedCity,
       isTypedTextErrorShown,
