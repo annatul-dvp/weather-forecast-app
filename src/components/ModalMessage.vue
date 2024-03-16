@@ -18,7 +18,7 @@ import useModal from '@/hooks/useModal'
 export default defineComponent({
   props: {
     shown: { type: Boolean, String },
-    style: { type: String }
+    style: { type: String, required: true }
   },
   setup (props, { emit: $emit }) {
     const contentElement = ref(null)
@@ -66,49 +66,49 @@ export default defineComponent({
   border-bottom-right-radius: 6px;
   background-color: $primary-color;
   color: $light-primary-color;
+}
 
-  &_big-screen {
-    top: 0;
-    left: calc(-120% - 5px);
-    padding: 5px 40px 5px 5px;
-    height: 70px;
-    width: 120%;
-    border-top-right-radius: 11px;
+.size-big-screen {
+  top: 0;
+  left: calc(-120% - 5px);
+  padding: 5px 40px 5px 5px;
+  height: 70px;
+  width: 120%;
+  border-top-right-radius: 11px;
 
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0px;
-      right: 0px;
-      padding: 8px;
-      background-color: $primary-color;
-      border-radius: 0px 3px;
-      transform-origin: top right;
-      transform: rotate(45deg) translateX(17px) translateY(4px);
-    }
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 8px;
+    background-color: $primary-color;
+    border-radius: 0px 3px;
+    transform-origin: top right;
+    transform: rotate(45deg) translateX(17px) translateY(4px);
   }
+}
 
-  &_small-screen {
-    top: calc(100% + 12px);
-    left: auto;
-    right: 0;
-    padding: 5px 5px 5px 5px;
-    height: 40px;
-    width: 100%;
-    font-size: .8rem;
-    border-top-right-radius: 6px;
+.size-small-screen {
+  top: calc(100% + 12px);
+  left: auto;
+  right: 0;
+  padding: 5px 5px 5px 5px;
+  height: 40px;
+  width: 100%;
+  font-size: .8rem;
+  border-top-right-radius: 6px;
 
-    &::after {
-      content: '';
-      position: absolute;
-      top: -5px;
-      right: 50%;
-      padding: 8px;
-      background-color: $primary-color;
-      border-radius: 0 3px;
-      transform-origin: top right;
-      transform: rotate(-45deg) translateX(50%);
-    }
+  &::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: 50%;
+    padding: 8px;
+    background-color: $primary-color;
+    border-radius: 0 3px;
+    transform-origin: top right;
+    transform: rotate(-45deg) translateX(50%);
   }
 }
 </style>

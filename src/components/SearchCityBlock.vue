@@ -18,7 +18,7 @@
     <button type="submit" class="btn btn_dark-theme search-form__btn" @click.prevent="getSearchedCityData(searchedCity)">
       <span class="btn__txt"> {{ websiteText.btnSearch }}</span>
     </button>
-    <ModalWindow v-model:open="errorTheCityIsntFound.status">
+    <ModalWindow v-model:open="errorTheCityIsntFound.status" v-model:style="errorSearchMessageStyle">
       {{ errorTheCityIsntFound.text }}
     </ModalWindow>
     <ModalMessage v-model:shown="isTypedTextErrorShown" v-model:style="errorSearchMessageStyle">
@@ -48,20 +48,21 @@ export default defineComponent({
     const lang = computed(() => $store.getters.getCurrentLang)
     const websiteText = computed(() => $store.getters.getWebsiteText)
     // const windowWidth = ref(window.innerWidth)
-    const errorSearchMessageStyle = ref('teleport-modal-msg_big-screen')
+    const errorSearchMessageStyle = ref('size-big-screen')
 
-    function setErrorSearchMessageStyle (winWidth) {
+    // set style for search error message that is showed by ModalMessage.vue
+    function setSearchErrorMessageStyle (winWidth) {
       if (winWidth <= 1280) {
-        return 'teleport-modal-msg_small-screen'
+        return 'size-small-screen'
       } else {
-        return 'teleport-modal-msg_big-screen'
+        return 'size-big-screen'
       }
     }
 
     // controlling changing window with, it will be needed to show ModalMessage of Error correctly
     onMounted(() => {
       // console.log(windowWidth.value)
-      errorSearchMessageStyle.value = setErrorSearchMessageStyle(window.innerWidth)
+      errorSearchMessageStyle.value = setSearchErrorMessageStyle(window.innerWidth)
       console.log(errorSearchMessageStyle.value)
     })
 
@@ -71,7 +72,7 @@ export default defineComponent({
     })
 
     const searchedCity = ref('') // the name of city to be searched, changing with input data
-    const isTypedTextErrorShown = ref(false)
+    const isTypedTextErrorShown = ref(false) // shows is there a error in typing text
 
     function toShowTypedTextError (isShown) {
       isTypedTextErrorShown.value = isShown
@@ -98,7 +99,8 @@ export default defineComponent({
 
     // getting list of assumed cities that we might be searching
     async function getAssumedCitiesList (name) {
-      if (name !== '') {
+      // searching only if city name is not empty and typed correctly
+      if (name !== '' & isTypedTextErrorShown.value) {
         await axios.get(`${API_BASE_URL}search.json?key=${theKey}&q=${name}`)
           .then(response => {
             foundCities.value = response.data
