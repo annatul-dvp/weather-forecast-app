@@ -55,7 +55,6 @@ export default defineComponent({
       statuses,
       currentCityName,
       currentWeatherData
-      // temp_c: numberFormat(lang, 'celcus', Number(currentWeatherData.value.temp_c))
     }
   }
 })

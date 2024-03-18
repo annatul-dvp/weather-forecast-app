@@ -159,6 +159,7 @@ export default createStore({
           .get('https://api.seeip.org/jsonip')
           .then(response => {
             commit('setIP', response.data.ip)
+            // console.log(response.data.ip)
           })
           .catch(error => {
             commit('setDataFailed', true)
@@ -167,6 +168,7 @@ export default createStore({
         await axios.get(`${API_BASE_URL}ip.json?key=${theKey}&q=${this.state.ip}`)
           .then(response => {
             commit('setUserData', response.data)
+            // console.log(response.data)
           })
           .catch(error => {
             commit('setDataFailed', true)
@@ -191,14 +193,6 @@ export default createStore({
               console.log(error)
             })
         }
-        // Перевод на русски, но возможно он не нужен, если получать данные по широте и долготе
-        // commit('setCityNameTranslation',
-        //   await useCityNameTranslation(
-        //     this.state.currentWeatherData.country,
-        //     this.state.currentWeatherData.city,
-        //     this.state.currentWeatherData.region
-        //   )
-        // )
         commit('setDataLoading', false)
       } catch (error) {
         commit('setDataFailed', true)

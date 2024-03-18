@@ -157,6 +157,16 @@ export default defineComponent({
     }
   }
 
+  @media screen and (orientation: $orient-portrait) {
+    .forecast-weather {
+      row-gap: 2%;
+    }
+  }
+
+  @media screen and (orientation: $orient-portrait) and (max-width: 960px) {
+
+  }
+
   @media screen and (orientation: $orient-portrait) and (max-width: 640px) {
     .cities-weather {
       @include display-flex (row, flex-start, normal, wrap);

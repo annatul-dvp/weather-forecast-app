@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { ref, reactive, computed } from 'vue'
 import { useStore } from 'vuex'
-import undateCurrentWeatherData from './useCurrentWeatherFormat'
+import undateCurrentWeatherData from '@/hooks/useCurrentWeatherFormat'
 import { API_BASE_URL, theKey } from '@/config'
 
 export default function () {

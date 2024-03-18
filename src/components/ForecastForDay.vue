@@ -1,6 +1,6 @@
 <template>
-  <div v-if="statuses.isDataFailed">{{ websiteText.loadingDataMsg }}</div>
-  <div v-else-if="statuses.isDataLoading">{{ websiteText.loadingDataMsg }}</div>
+  <div v-if="statuses.isDataLoading">{{ websiteText.loadingDataMsg }}</div>
+  <div v-else-if="statuses.isDataFailed">{{ websiteText.errorLoadingDataMsg }}</div>
   <div v-else class="weather-for-day" v-for="(day) of forecastWeatherData" :key="day.date">
     <h4 class="weather-for-day__date">2024/01/30</h4>
     <div class="weather-for-day__data astro-data">{{ websiteText.sunriseTxt }}{{ day.astro.sunrise }}</div>
@@ -113,7 +113,13 @@ export default defineComponent({
     .weather-for-day {
       position: relative;
       @include display-flex (row, space-between, normal, wrap);
+      padding: 25px 50px;
       min-height: 27%;
+      width: 100%;
+
+      &__date {
+        font-size: 1.3rem;
+      }
 
       &__data {
         width: 50%;
@@ -121,10 +127,10 @@ export default defineComponent({
       }
 
       &__picture {
-        top: 0;
-        right: 43%;
+        top: 25px;
+        right: 42%;
         width: auto;
-        transform: scale(80%) translateX(100%);
+        transform: scale(80%) translateX(100%) translateY(-25%);
       }
     }
 
@@ -140,13 +146,25 @@ export default defineComponent({
     }
   }
 
+  @media screen and (orientation: $orient-portrait) and (max-width: 1280px) {
+    .weather-for-day {
+      padding: 25px 30px 10px 30px;
+
+      &__picture {
+        right: 40%;
+      }
+    }
+  }
+
+  @media screen and (orientation: $orient-portrait) and (max-width: 960px) {
+    .weather-for-day {
+      padding: 20px 15px 10px 15px;
+    }
+  }
+
   @media screen and (orientation: $orient-portrait) and (max-width: 620px) {
     .weather-for-day {
       padding: 15px 10px 5px 10px;
-
-      &__date {
-        font-size: 1.3rem;
-      }
 
       &__data:not(.astro-data) {
         width: 100%;

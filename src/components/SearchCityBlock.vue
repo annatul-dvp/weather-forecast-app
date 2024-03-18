@@ -61,7 +61,9 @@ export default defineComponent({
 
     // controlling changing window with, it will be needed to show ModalMessage of Error correctly
     onMounted(() => {
+      // console.log(windowWidth.value)
       errorSearchMessageStyle.value = setSearchErrorMessageStyle(window.innerWidth)
+      // console.log(errorSearchMessageStyle.value)
     })
 
     const errorTheCityIsntFound = ref({ // error info, it will open ModalWindow if the city hasn't been found
