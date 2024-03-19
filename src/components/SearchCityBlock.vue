@@ -109,7 +109,7 @@ export default defineComponent({
     // getting list of assumed cities that we might be searching
     async function getAssumedCitiesList (name) {
       // searching only if city name is not empty and typed correctly
-      if (name !== '' & isTypedTextErrorShown.value) {
+      if (name !== '' & !isTypedTextErrorShown.value) {
         await axios.get(`${API_BASE_URL}search.json?key=${theKey}&q=${name}`)
           .then(response => {
             foundCities.value = response.data
