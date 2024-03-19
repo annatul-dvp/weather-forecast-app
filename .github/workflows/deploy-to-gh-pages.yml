@@ -22,7 +22,7 @@ jobs:
     - name: Generate config.js
       run: |
            export THEKEY=\'$THEKEY\'
-           echo "export const API_BASE_URL = 'https://api.weatherapi.com/v1/'\nexport const theKey = '${THEKEY}'" > src/config.js
+           echo "export const API_BASE_URL = 'https://api.weatherapi.com/v1/'; export const theKey = '${THEKEY}'" > src/config.js
       env:
         THEKEY: ${{ secrets.THEKEY }}
 
