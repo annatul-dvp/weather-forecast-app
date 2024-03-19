@@ -19,6 +19,13 @@ jobs:
     - name: Check out your repository using git
       uses: actions/checkout@v2
 
+    - name: Generate config.js
+      run: |
+           export THEKEY=\'$THEKEY\'
+           echo "export const API_BASE_URL = 'https://api.weatherapi.com/v1/'\nexport const theKey = '${THEKEY}'" > src/config.js
+      env:
+        THEKEY: ${{ secrets.THEKEY }}
+
     - name: Use Node.js 18
       uses: actions/setup-node@v2
       with:
