@@ -61,8 +61,8 @@ export default defineComponent({
     left: 0;
     right: 0;
     bottom: 0;
-    padding-top: $hb-padding-top-l-size;
-    padding-bottom: $hb-padding-bottop-l-size;
+    padding-top: $hb-padding-top-xl-size;
+    padding-bottom: $hb-padding-bottop-xl-size;
     height: 100%;
     transition: all 1s ease-in-out;
 
@@ -162,10 +162,10 @@ export default defineComponent({
       padding-bottom: $hb-padding-bottop-l-size;
 
       &__btn {
-        top: 10px;
-        left: calc(50% - 14px);
-        right: calc(50% - 14px);
-        bottom: calc(100% - 10px - 20px);
+        top: 8px;
+        left: calc(50% - 18px);
+        right: calc(50% - 18px);
+        bottom: calc(100% - 8px - 20px);
         width: 28px;
       }
     }

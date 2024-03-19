@@ -48,6 +48,7 @@ export default defineComponent({
     border: 2px solid;
     border-radius: 10px;
     min-height: 80%;
+    overflow: hidden;
 
     &__date {
       margin-bottom: 5px;
@@ -158,7 +159,19 @@ export default defineComponent({
 
   @media screen and (orientation: $orient-portrait) and (max-width: 960px) {
     .weather-for-day {
-      padding: 20px 15px 10px 15px;
+      padding: 8px 15px 6px 15px;
+      min-height: auto;
+      height: 31%;
+
+      &__date {
+        margin-bottom: 2px;
+        font-size: 1.1rem;
+      }
+
+      &__data {
+        width: 50%;
+        margin-bottom: 2px;
+      }
     }
   }
 

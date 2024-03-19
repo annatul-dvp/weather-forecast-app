@@ -19,7 +19,7 @@ $footer-height-xxs-size: 25px;
 /*Current city block*/
 $current-city-height-xxl-size: 800px; 
 $current-city-height-xl-size: 500px; 
-$current-city-height-l-size: 350px; 
+$current-city-height-l-size: 320px; 
 $current-city-height-m-size: 250px;
 $current-city-height-s-size: 180px;
 $current-city-height-xs-size: 110px;
@@ -33,8 +33,10 @@ $additional-info-height-xs-size: 150px;
 
 /*Hidding block*/
 
-$hb-padding-top-l-size: 50px;
-$hb-padding-bottop-l-size: 40px;
+$hb-padding-top-xl-size: 50px;
+$hb-padding-bottop-xl-size: 40px;
+$hb-padding-top-l-size: 38px;
+$hb-padding-bottop-l-size: 25px;
 $hb-padding-top-m-size: 35px;
 $hb-padding-bottop-m-size: 20px;
 $hb-padding-top-s-size: 25px;

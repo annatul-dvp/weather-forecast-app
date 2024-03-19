@@ -17,7 +17,7 @@ import useModal from '@/hooks/useModal'
 
 export default defineComponent({
   props: {
-    shown: { type: Boolean, String },
+    shown: { type: [Boolean, String] },
     style: { type: String, required: true }
   },
   setup (props, { emit: $emit }) {

@@ -141,7 +141,7 @@ export default defineComponent({
       border-top: 2px solid;
 
       &__title {
-        margin-bottom: 0;
+        margin-bottom: 5px;
         font-size: 1.3rem;
         line-height: 1.3rem;
       }
@@ -164,7 +164,13 @@ export default defineComponent({
   }
 
   @media screen and (orientation: $orient-portrait) and (max-width: 960px) {
-
+    .cities-weather {
+      column-gap: 1%;
+        &__compact-item {
+          padding: 5px 15px;
+          width: 49.5%;
+        }
+    }
   }
 
   @media screen and (orientation: $orient-portrait) and (max-width: 640px) {

@@ -32,11 +32,10 @@ import axios from 'axios'
 import { API_BASE_URL, theKey } from '@/config'
 import { defineComponent, ref, computed, watch, onMounted } from 'vue'
 import { useStore } from 'vuex'
+import { useWindowSize } from '@vueuse/core'
 import ModalWindow from '@/components/ModalWindow.vue'
 import ModalMessage from './ModalMessage.vue'
 import isLanguageCorrect from '@/hooks/useLanguageCheck'
-// import useCityNameTranslation from '@/hooks/useCityNameTranslation'
-// import useTranslation from '@/hooks/useTranslation.js'
 
 export default defineComponent({
   components: {
@@ -50,7 +49,10 @@ export default defineComponent({
     // const windowWidth = ref(window.innerWidth)
     const errorSearchMessageStyle = ref('size-big-screen')
 
-    // set style for search error message that is showed by ModalMessage.vue
+    // getting current screen with using library VueUse
+    const { width: screenWidth } = useWindowSize()
+
+    // function to set style for search error message that is showed by ModalMessage.vue
     function setSearchErrorMessageStyle (winWidth) {
       if (winWidth <= 1280) {
         return 'size-small-screen'
@@ -61,9 +63,16 @@ export default defineComponent({
 
     // controlling changing window with, it will be needed to show ModalMessage of Error correctly
     onMounted(() => {
-      // console.log(windowWidth.value)
-      errorSearchMessageStyle.value = setSearchErrorMessageStyle(window.innerWidth)
-      // console.log(errorSearchMessageStyle.value)
+      errorSearchMessageStyle.value = setSearchErrorMessageStyle(screenWidth.value)
+    })
+
+    // watching if a screen width has changed and if a new width is different comparing to 1280px
+    // it's important because we have diffent styles to show modal windows with a error,
+    // the styles depend on screen width: <= or > 1280px
+    watch(() => screenWidth.value, (newWidth, oldWidth) => {
+      if (newWidth <= 1280 & oldWidth > 1280 || newWidth > 1280 & oldWidth <= 1280) {
+        errorSearchMessageStyle.value = setSearchErrorMessageStyle(newWidth)
+      }
     })
 
     const errorTheCityIsntFound = ref({ // error info, it will open ModalWindow if the city hasn't been found

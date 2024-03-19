@@ -174,6 +174,21 @@ export default defineComponent({
     }
   }
 
+  @media screen and (orientation: $orient-portrait) and (max-width: 960px) {
+    .compact-city {
+      @include display-flex (row, space-evenly, center, wrap);
+      &__name {
+        font-size: 1.2rem;
+      }
+
+      &__name,
+      &__temp,
+      &__temp-feels-like {
+        margin-bottom: 0;
+      }
+    }
+  }
+
   @media screen and (orientation: $orient-portrait) and (max-width: 640px) {
     .compact-city {
       @include display-flex (row, space-evenly, flex-start, wrap);
@@ -182,16 +197,15 @@ export default defineComponent({
       &__temp-feels-like {
         text-align: center;
       }
+
       &__name {
         margin-top: 0;
-        margin-bottom: 0;
         width: 100%;
         font-size: 1.5rem;
       }
 
       &__temp,
       &__temp-feels-like {
-        margin-bottom: 0;
         width: 100%;
       }
 
