@@ -23,7 +23,7 @@ jobs:
       run: |
            export THEKEY=\'$THEKEY\'
            export X_RAPIDAPI_KEY=\'$X_RAPIDAPI_KEY\'
-           echo "export const API_BASE_URL = 'https://api.weatherapi.com/v1/'; export const theKey = ${THEKEY}; export const theRapidKey = ${X_RAPIDAPI_KEY};" > src/config.js 
+           echo "export const API_BASE_URL = 'https://api.weatherapi.com/v1/'; export const theKey = ${THEKEY}; export const theRapidKey = ${X_RAPIDAPI_KEY}" > src/config.js 
       env:
         THEKEY: ${{ secrets.THEKEY }}
         X_RAPIDAPI_KEY: ${{ secrets.X_RAPIDAPI_KEY }}
