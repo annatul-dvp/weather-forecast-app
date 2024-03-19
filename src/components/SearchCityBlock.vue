@@ -89,6 +89,10 @@ export default defineComponent({
 
     // checking is typing text using correct language
     watch(() => searchedCity.value, (text) => {
+      console.log(text)
+      console.log(lang.value === 'en')
+      console.log(!isLanguageCorrect(lang.value, text))
+      console.log(text !== '')
       if (lang.value === 'ru' & !isLanguageCorrect(lang.value, text) & text !== '') {
         searchedCity.value = searchedCity.value.substring(0, searchedCity.value.length - 1)
         isTypedTextErrorShown.value = 'Введён некорректный символ! Проверьте язык ввода.'
