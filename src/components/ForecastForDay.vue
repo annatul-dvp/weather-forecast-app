@@ -1,6 +1,6 @@
 <template>
-  <div v-if="statuses.isDataLoading">{{ websiteText.loadingDataMsg }}</div>
-  <div v-else-if="statuses.isDataFailed">{{ websiteText.errorLoadingDataMsg }}</div>
+  <div v-if="statuses.isDataFailed">{{ websiteText.errorLoadingDataMsg }}</div>
+  <div v-else-if="statuses.isDataLoading">{{ websiteText.loadingDataMsg }}</div>
   <div v-else class="weather-for-day" v-for="(day) of forecastWeatherData" :key="day.date">
     <h4 class="weather-for-day__date">2024/01/30</h4>
     <div class="weather-for-day__data astro-data">{{ websiteText.sunriseTxt }}{{ day.astro.sunrise }}</div>
