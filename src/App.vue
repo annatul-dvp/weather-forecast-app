@@ -182,6 +182,7 @@ export default {
     border-radius: 6px;
     border: 1px solid $primary-color;
     font-size: 1rem;
+    transition: all .2s ease-in-out;
 
     &:focus-visible,
     &:active {

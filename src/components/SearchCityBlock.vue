@@ -4,9 +4,9 @@
     <fieldset class="search-form__fieldset">
       <input type="text" list="cities_datalist" class="input search-form__input"
         v-model.trim="searchedCity" :placeholder="websiteText.inputPlaceholder"
-        @input="getAssumedCitiesList(searchedCity)"
-        @mouseenter="setDatalistStatus('')">
-      <div id="cities_datalist" class="custom-datalist search-form__custom-datalist" :class="datalistStatus"
+        @input="getAssumedCitiesList(searchedCity)" @focus="setDatalistStyleFocused(true)"
+        @focusout="setDatalistStyleFocused(false)"    @mouseenter="setDatalistStatus('')">
+      <div id="cities_datalist" class="custom-datalist search-form__custom-datalist" :class="[datalistStatus, datalistStyle]"
       @mouseleave="setDatalistStatus('custom-datalist_hidden')">
         <div class="custom-datalist__option" v-for="city of foundCities" :key="city.id"
         :value="city.name +', ' + city.country" @click="toChooseCity(city)">
@@ -91,12 +91,12 @@ export default defineComponent({
     watch(() => searchedCity.value, (text) => {
       if (lang.value === 'ru' & !isLanguageCorrect(lang.value, text) & text !== '') {
         searchedCity.value = searchedCity.value.substring(0, searchedCity.value.length - 1)
-        isTypedTextErrorShown.value = 'Введён некорректный символ! Проверьте язык ввода.'
+        isTypedTextErrorShown.value = 'Введён некорректный символ! Используйте, пожалуйста, русскую раскладку на клавиатуре.'
         setTimeout(toShowTypedTextError, 4000, false)
       }
       if (lang.value === 'en' & !isLanguageCorrect(lang.value, text) & text !== '') {
         searchedCity.value = searchedCity.value.substring(0, searchedCity.value.length - 1)
-        isTypedTextErrorShown.value = 'Incorrect symbol! Check input language settings.'
+        isTypedTextErrorShown.value = 'Incorrect symbol! Use the English keyboard layout, please.'
         setTimeout(toShowTypedTextError, 4000, false)
       }
     })
@@ -137,6 +137,17 @@ export default defineComponent({
       }
     }
 
+    // datalist styles depends on input is focused or not
+    const datalistStyle = ref('custom-datalist_default')
+
+    function setDatalistStyleFocused (isFocused) {
+      if (isFocused) {
+        datalistStyle.value = 'custom-datalist_focused'
+      } else {
+        datalistStyle.value = 'custom-datalist_default'
+      }
+    }
+
     // Getting full information of chosen city
     function getSearchedCityData (city) {
       if (foundCities.value.length === 0) {
@@ -164,6 +175,8 @@ export default defineComponent({
       searchedCity.value = city.name + ', ' + city.country
       foundCities.value.length = 0
       foundCities.value.push(city)
+      setDatalistStatus('custom-datalist_hidden')
+      setDatalistStyleFocused(false)
     }
 
     return {
@@ -182,6 +195,8 @@ export default defineComponent({
       errorTheCityIsntFound,
       datalistStatus,
       setDatalistStatus,
+      datalistStyle,
+      setDatalistStyleFocused,
 
       getSearchedCityData,
       searchedCityData
@@ -225,12 +240,25 @@ export default defineComponent({
   width: 100%;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
-  border-left: 3px solid $focused-color;
-  border-right: 3px solid $focused-color;
-  border-bottom: 3px solid $focused-color;
+  // border-left: 3px solid $focused-color;
+  // border-right: 3px solid $focused-color;
+  // border-bottom: 3px solid $focused-color;
   overflow-x: hidden;
-  transition: all .5s ease;
   transform: translateY(0px);
+
+  &_default {
+    transition: all .2s ease-in-out;
+    border-left: 1px solid $primary-color;
+    border-right: 1px solid $primary-color;
+    border-bottom: 1px solid $primary-color;
+  }
+
+  &_focused {
+    transition: all .2s ease-in-out;
+    border-left: 3px solid $focused-color;
+    border-right: 3px solid $focused-color;
+    border-bottom: 3px solid $focused-color;
+  }
 
   &__option {
     cursor: pointer;
@@ -240,6 +268,7 @@ export default defineComponent({
     background-color: $light-primary-color;
     white-space: nowrap;
     text-align: left;
+    transition: all .5s ease-in-out;
 
     &:hover {
       background-color: $light-color;
