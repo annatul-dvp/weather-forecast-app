@@ -69,8 +69,8 @@ export default defineComponent({
     @include display-flex (column, center, flex-start);
 
     &__name {
-      margin-top: 5%;
-      margin-bottom: 10%;
+      // margin-top: 5%;
+      margin-bottom: 5%;
       font-size: 1.5rem;
     }
 
@@ -98,7 +98,7 @@ export default defineComponent({
   @media screen and (max-width: 1280px) {
     .compact-city {
       &__name {
-        margin-top: 0;
+        // margin-top: 0;
         margin-bottom: 5px;
         font-size: 1.3rem;
       }
@@ -117,7 +117,7 @@ export default defineComponent({
   @media screen and (max-width: 960px) {
     .compact-city {
       &__name {
-        margin-top: 0;
+        // margin-top: 0;
         margin-bottom: 1%;
       }
 
@@ -199,7 +199,7 @@ export default defineComponent({
       }
 
       &__name {
-        margin-top: 0;
+        // margin-top: 0;
         width: 100%;
         font-size: 1.5rem;
       }

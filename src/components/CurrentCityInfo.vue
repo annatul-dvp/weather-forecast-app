@@ -2,14 +2,14 @@
   <div v-if="statuses.isDataFailed" class="container detailed-weather">Ошибка при загрузке данных! </div>
   <div v-else-if="statuses.isDataLoading" class="container detailed-weather">Идёт загрузка.... </div>
   <div v-else class="container detailed-weather">
-    <div class="detailed-weather__city-name">
-      {{ currentCityName }}
-    </div>
-    <div class="detailed-weather__current-time">{{ currentWeatherData.last_updated }}</div>
     <picture class="detailed-weather__picture">
       <source :srcset=currentWeatherData.condition.icon />
       <img class="detailed-weather__img" :src=currentWeatherData.condition.icon :alt=currentWeatherData.condition.text />
     </picture>
+    <div class="detailed-weather__city-name">
+      {{ currentCityName }}
+    </div>
+    <div class="detailed-weather__current-time">{{ currentWeatherData.last_updated }}</div>
     <div class="detailed-weather__info">
       <span class="span-smth-name">{{ websiteText.tempTxt }}</span>
       <span class="detailed-weather__temp">{{ currentWeatherData.temp_c_txt }} / {{ currentWeatherData.temp_f_txt }}</span>
@@ -66,39 +66,51 @@ export default defineComponent({
 
   .detailed-weather {
     position: relative;
-    @include display-flex (column, center, flex-start, wrap);
+    // @include display-flex (column, center, flex-start, wrap);
+    @include display-flex (column, space-between, flex-start, wrap);
 
     &__city-name,
     &__current-time{
       padding-left: 5%;
-      width: 50%;
+      // width: 50%;
       height: 50%;
     }
 
     &__city-name {
-      @include display-flex (column, end, flex-start);
+      @include display-flex (column, flex-end, flex-start);
       font-size: 4rem;
     }
 
     &__current-time {
-      @include display-flex (column, start, flex-start);
+      @include display-flex (column, flex-start, flex-start);
       font-size: 1rem;
       font-style: italic;
     }
 
     &__info {
       @include display-flex (row, left);
-      width: 50%;
-      margin-bottom: 25px;
+      // width: 50%;
+      // margin-bottom: 25px;
+      // flex-grow: 1;
+      flex-basis: 10%;
+      flex-grow: 1;
+      margin-bottom: 15px;
       font-size: 1.2rem;
+
+      &:last-of-type {
+        flex-grow: 3;
+      }
     }
 
     &__picture {
       position: absolute;
-      top: 50px;
-      left: 6%;
-      width: 60px;
-      height: 100%;
+      // top: 50px;
+      // left: 6%;
+      // width: 60px;
+      // height: 100%;
+      top: 12%;
+      left: 5%;
+      width: 4%;
     }
 
     &__img {
@@ -128,10 +140,15 @@ export default defineComponent({
       }
 
       &__picture {
-        top: calc($current-city-height-s-size / 4);
-        left: 28%;
-        width: calc(30px + 100%*0.05);
-        height: 100%;
+        // top: calc($current-city-height-s-size / 4);
+        // left: 20%;
+        // width: calc(30px + 100%*0.05);
+        // height: 100%;
+        top: auto;
+        bottom: 0;
+        left: 12%;
+        width: 4.5%;
+        transform: translateX(-100%);
       }
 
     }
@@ -176,7 +193,7 @@ export default defineComponent({
 
   @media screen and (orientation: $orient-portrait) {
     .detailed-weather {
-      @include display-flex (row, space-between, normal, wrap);
+      @include display-flex (row, space-between, flex-start, wrap);
 
       &__city-name,
       &__current-time{
@@ -185,33 +202,51 @@ export default defineComponent({
       }
 
       &__city-name {
-        @include display-flex (column, end, center);
+        @include display-flex (column, flex-end, center);
         border-top: 2px solid $primary-color;
         height: 20%;
       }
 
       &__current-time {
-        @include display-flex (column, start, center);
+        @include display-flex (column, flex-start, center);
         border-bottom: 2px solid $primary-color;
         height: 15%;
       }
 
       &__info {
         @include display-flex (row, center);
+        flex-basis: auto;
+        flex-grow: 0;
         width: 100%;
         margin-bottom: 10px;
 
         &:nth-of-type(3) {
           margin-top: 10px;
         }
+
+        &:last-of-type {
+          flex-grow: 0;
+        }
       }
 
       &__picture {
-        position: relative;
-        top: 0;
+        top: 45%;
         left: 50%;
         height: 5%;
-        transform: translateX(-50%) translateY(-315%);
+        transform: translateX(-50%) translateY(-275%);
+        // order: -1;
+      }
+    }
+  }
+
+  @media screen and (orientation: $orient-portrait) and (max-width: 1280px) {
+    .detailed-weather {
+      &__city-name {
+        border-top: none;
+      }
+
+      &__current-time {
+        border-bottom: none;
       }
     }
   }
@@ -219,12 +254,10 @@ export default defineComponent({
   @media screen and (orientation: $orient-portrait) and (max-width: 960px) {
     .detailed-weather {
       &__city-name {
-        border-top: none;
         height: 20%;
       }
 
       &__current-time {
-        border-bottom: none;
         height: 10%;
       }
     }
